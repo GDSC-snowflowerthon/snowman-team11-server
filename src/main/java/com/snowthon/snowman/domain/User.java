@@ -1,6 +1,7 @@
 package com.snowthon.snowman.domain;
 
 
+import com.nimbusds.openid.connect.sdk.assurance.evidences.VouchEvidence;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,7 +30,6 @@ public class User {
 
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
-
 
     @Column(name = "refresh_token", nullable = false)
     private String refreshToken;

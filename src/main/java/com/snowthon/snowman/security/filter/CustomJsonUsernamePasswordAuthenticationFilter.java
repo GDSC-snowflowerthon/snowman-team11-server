@@ -1,7 +1,7 @@
 package com.snowthon.snowman.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.snowthon.snowman.dto.response.UserLoginDto;
+import com.snowthon.snowman.dto.request.UserLoginDto;
 import com.snowthon.snowman.security.handler.signin.DefaultFailureHandler;
 import com.snowthon.snowman.security.handler.signin.DefaultSuccessHandler;
 import com.snowthon.snowman.security.info.UserPrincipal;
