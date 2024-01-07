@@ -1,9 +1,9 @@
 package com.snowthon.snowman.repository;
 
-import com.snowthon.snowman.domain.Weather;
+import com.snowthon.snowman.domain.Branch;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface WeatherRepository extends JpaRepository<Weather, Long> {
+public interface BranchRepository extends JpaRepository<Branch, Long> {
 }

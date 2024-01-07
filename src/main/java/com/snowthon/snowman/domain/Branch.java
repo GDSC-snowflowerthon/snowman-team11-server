@@ -45,6 +45,15 @@ public class Branch {
     private HeadWear headWear;
 
     /**
+     * temperature
+     * mainBranch일 경우 필수
+     * 다른 브랜치의 경우 null
+     * 그 시각의 온도를 가져오기
+     */
+    @Column(name = "temperature")
+    private Integer temperature;
+
+    /**
      * highestTemperature, lowestTemperature
      *
      * mainBranch일 경우 최고, 최저 null
@@ -71,7 +80,12 @@ public class Branch {
     private LocalDateTime createdAt;
 
     @Builder
-    public Branch(Integer highestTemperature, Integer lowestTemperature, String branchTime, Weather weather, EBranchType branchType) {
+    public Branch(OuterWear outerWear, TopWear topWear, NeckWear neckWear, HeadWear headWear, Integer temperature, Integer highestTemperature, Integer lowestTemperature, String branchTime, Weather weather, EBranchType branchType) {
+        this.outerWear = outerWear;
+        this.topWear = topWear;
+        this.neckWear = neckWear;
+        this.headWear = headWear;
+        this.temperature = temperature;
         this.highestTemperature = highestTemperature;
         this.lowestTemperature = lowestTemperature;
         this.branchTime = branchTime;

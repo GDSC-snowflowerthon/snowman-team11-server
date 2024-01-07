@@ -1,6 +1,6 @@
 package com.snowthon.snowman.utility;
 
-import com.snowthon.snowman.dto.request.RegionDto;
+import com.snowthon.snowman.dto.request.thirdParty.RegionDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

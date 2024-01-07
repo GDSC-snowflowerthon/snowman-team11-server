@@ -1,16 +1,11 @@
 package com.snowthon.snowman.utility;
 
-import com.snowthon.snowman.dto.request.WeatherDto;
+import com.snowthon.snowman.dto.request.thirdParty.WeatherDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,20 +43,20 @@ public class WeatherUtil {
 
     //base_date, base_time, nx, ny는 각각 받아서 넣어줘야함
 
-    public WeatherDto getWeather(double lat, double lng)  {
+    public WeatherDto getWeather(double lat, double lng, String base_date, String base_time) {
         Map<String, Integer> stringIntegerMap = transToXY(lat, lng);
         int nx = stringIntegerMap.get("nx");
         int ny = stringIntegerMap.get("ny");
         log.info("nx : {}, ny : {}", nx, ny);
 
         return webClientUtil.get(
-                 url +
+                url +
                         "?serviceKey=" + secretKey +
                         "&numOfRows=" + numOfRows +
                         "&pageNo=" + pageNo +
                         "&dataType=" + dataType +
-                        "&base_date=" + "20240107"+
-                        "&base_time="+ "2300" +
+                        "&base_date=" + base_date +
+                        "&base_time=" + base_time +
                         "&nx=" + nx +
                         "&ny=" + ny,
                 WeatherDto.class, null);

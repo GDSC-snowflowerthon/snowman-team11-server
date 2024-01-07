@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
-@Table(name = "top_wear_cnt")
+@Table(name = "top_wear")
 public class TopWear {
 
     @Id

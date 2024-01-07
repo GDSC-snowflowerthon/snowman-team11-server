@@ -1,18 +1,15 @@
 package com.snowthon.snowman.controller;
 
-import com.snowthon.snowman.annotation.UserId;
 import com.snowthon.snowman.contrant.Constants;
 import com.snowthon.snowman.dto.common.ResponseDto;
 import com.snowthon.snowman.service.WeatherService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.UnsupportedEncodingException;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,8 +21,10 @@ public class WeatherController {
     @GetMapping("")
     @Operation(summary = "날씨 정보 조회", description = "날씨 정보를 조회합니다.")
     public ResponseDto<?> showWeatherInfo(
-    ) throws UnsupportedEncodingException {
-        return ResponseDto.ok(weatherService.getWeather(37.5665, 126.9780));
+            @Param("latitude") @Schema(description = "위도", example = "37.5665") Double latitude,
+            @Param("longitude") @Schema(description = "경도", example = "126.9780") Double longitude
+    ) {
+        return ResponseDto.ok(weatherService.getWeather(latitude, longitude));
     }
 
 }

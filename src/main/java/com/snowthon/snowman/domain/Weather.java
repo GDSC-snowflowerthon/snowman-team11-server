@@ -5,6 +5,7 @@ import com.snowthon.snowman.domain.wear.NeckWear;
 import com.snowthon.snowman.domain.wear.OuterWear;
 import com.snowthon.snowman.domain.wear.TopWear;
 import com.snowthon.snowman.dto.type.ELevel;
+import com.snowthon.snowman.dto.type.ESky;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,23 +24,28 @@ public class Weather {
     @Column(name = "id")
     private Long id;
 
-    @Column(name="location", nullable = false)
-    private String location;
+    @Column(name = "location", nullable = false)
+    private String location; //지역 이름
 
-    @Column(name="temperature", nullable = false)
-    private int temperature;
+    @Column(name = "code", nullable = false)
+    private String code;    //지역 코드
 
-    @Column(name="level", nullable = false)
+    @Column(name ="sky", nullable = false)
+    private ESky sky; //눈 비 구분
+
+
+    @Column(name = "level", nullable = false)
     private ELevel level;
 
-    @Column(name="created_at", nullable = false)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @Builder
-    public Weather(String location, int temperature) {
+    public Weather(String location, String code, ESky sky, ELevel level) {
         this.location = location;
-        this.temperature = temperature;
+        this.code = code;
+        this.sky = sky;
+        this.level = level;
         this.createdAt = LocalDateTime.now();
-        this.level = ELevel.getLevel(temperature);
     }
 }

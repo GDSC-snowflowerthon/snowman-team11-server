@@ -1,4 +1,4 @@
-package com.snowthon.snowman.dto.request;
+package com.snowthon.snowman.dto.request.thirdParty;
 
 import lombok.Builder;
 import lombok.Getter;
