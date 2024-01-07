@@ -64,7 +64,7 @@ public class WeatherUtil {
                         "&base_time="+ "2300" +
                         "&nx=" + nx +
                         "&ny=" + ny,
-                WeatherDto.class);
+                WeatherDto.class, null);
     }
 
     private static Map<String, Integer> transToXY(double lat, double lng) {
