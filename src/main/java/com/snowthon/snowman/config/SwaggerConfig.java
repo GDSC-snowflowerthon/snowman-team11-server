@@ -32,8 +32,8 @@ public class SwaggerConfig {
     public OpenAPI openAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Mooko renewal API")
-                        .description("Mooko renewal API Docs")
+                        .title("Snowman renewal API")
+                        .description("Snowman renewal API Docs")
                         .version(VERSION))
                 .components(new Components()
                         .addSecuritySchemes(JWT_SCHEMA_NAME,

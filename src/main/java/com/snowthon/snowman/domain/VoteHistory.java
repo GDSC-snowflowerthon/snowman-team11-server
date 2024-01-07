@@ -2,7 +2,7 @@ package com.snowthon.snowman.domain;
 
 import com.snowthon.snowman.dto.type.wear.EHeadWear;
 import com.snowthon.snowman.dto.type.wear.ENeckWear;
-import com.snowthon.snowman.dto.type.wear.EOuter;
+import com.snowthon.snowman.dto.type.wear.EOuterWear;
 import com.snowthon.snowman.dto.type.wear.ETopWear;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -32,7 +32,7 @@ public class VoteHistory {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "`outer`", nullable = false)
-    private EOuter outer;
+    private EOuterWear outer;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "head_wear")
@@ -53,7 +53,7 @@ public class VoteHistory {
     private LocalDateTime voteTime;
 
     @Builder
-    public VoteHistory(User user, ETopWear topWear, EOuter outer, EHeadWear headWear, ENeckWear neckWear, int highestTemperature, int lowestTemperature, LocalDateTime voteTime) {
+    public VoteHistory(User user, ETopWear topWear, EOuterWear outer, EHeadWear headWear, ENeckWear neckWear, int highestTemperature, int lowestTemperature, LocalDateTime voteTime) {
         this.user = user;
         this.topWear = topWear;
         this.outer = outer;

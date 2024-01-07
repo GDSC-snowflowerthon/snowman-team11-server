@@ -1,5 +1,10 @@
 package com.snowthon.snowman.domain;
 
+import com.snowthon.snowman.domain.wear.HeadWear;
+import com.snowthon.snowman.domain.wear.NeckWear;
+import com.snowthon.snowman.domain.wear.OuterWear;
+import com.snowthon.snowman.domain.wear.TopWear;
+import com.snowthon.snowman.dto.type.ELevel;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,6 +29,10 @@ public class Weather {
     @Column(name="temperature", nullable = false)
     private int temperature;
 
+    @Column(name="level", nullable = false)
+    private ELevel level;
+
+    @Column(name="created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @Builder
@@ -31,5 +40,6 @@ public class Weather {
         this.location = location;
         this.temperature = temperature;
         this.createdAt = LocalDateTime.now();
+        this.level = ELevel.getLevel(temperature);
     }
 }

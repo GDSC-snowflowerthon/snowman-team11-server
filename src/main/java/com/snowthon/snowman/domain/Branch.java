@@ -1,9 +1,13 @@
 package com.snowthon.snowman.domain;
 
+import com.snowthon.snowman.domain.wear.HeadWear;
+import com.snowthon.snowman.domain.wear.NeckWear;
+import com.snowthon.snowman.domain.wear.OuterWear;
+import com.snowthon.snowman.domain.wear.TopWear;
 import com.snowthon.snowman.dto.type.EBranchType;
 import com.snowthon.snowman.dto.type.wear.EHeadWear;
 import com.snowthon.snowman.dto.type.wear.ENeckWear;
-import com.snowthon.snowman.dto.type.wear.EOuter;
+import com.snowthon.snowman.dto.type.wear.EOuterWear;
 import com.snowthon.snowman.dto.type.wear.ETopWear;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -11,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,31 +28,28 @@ public class Branch {
     @Column(name = "id")
     private Long id;
 
-    /**
-     * outer, topwear는 필수
-     * neckwear, headwear는 선택
-     */
-    @Column(name = "`outer`", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private EOuter outer;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "outer_wear_id")
+    private OuterWear outerWear;
 
-    @Column(name = "top_wear", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private ETopWear topWear;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "top_wear_id")
+    private TopWear topWear;
 
-    @Column(name = "neck_wear")
-    @Enumerated(EnumType.STRING)
-    private ENeckWear neckWear;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "neck_wear_id")
+    private NeckWear neckWear;
 
-    @Column(name = "head_wear")
-    @Enumerated(EnumType.STRING)
-    private EHeadWear headWear;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "head_wear_id")
+    private HeadWear headWear;
 
     /**
-     * mainBranch일 경우 최고, 최저 필수
-     * 다른 브랜치의 경우 null로 처리
+     * highestTemperature, lowestTemperature
+     *
+     * mainBranch일 경우 최고, 최저 null
+     * 다른 브랜치의 경우 필수
      */
-
     @Column(name = "lowest_temperature")
     private Integer highestTemperature;
 
@@ -55,7 +57,7 @@ public class Branch {
     private Integer lowestTemperature;
 
     @Column(name = "branch_time", nullable = false)
-    private String branchTime;
+    private String branchTime; // ex) 1월 3일 오후
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "weather_id", nullable = false)
@@ -68,14 +70,8 @@ public class Branch {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-
-
     @Builder
-    public Branch(EOuter outer, ETopWear topWear, ENeckWear neckWear, EHeadWear headWear, Integer highestTemperature, Integer lowestTemperature, String branchTime, Weather weather, EBranchType branchType) {
-        this.outer = outer;
-        this.topWear = topWear;
-        this.neckWear = neckWear;
-        this.headWear = headWear;
+    public Branch(Integer highestTemperature, Integer lowestTemperature, String branchTime, Weather weather, EBranchType branchType) {
         this.highestTemperature = highestTemperature;
         this.lowestTemperature = lowestTemperature;
         this.branchTime = branchTime;
@@ -83,4 +79,5 @@ public class Branch {
         this.branchType = branchType;
         this.createdAt = LocalDateTime.now();
     }
+
 }

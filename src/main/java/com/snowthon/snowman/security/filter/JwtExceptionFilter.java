@@ -17,13 +17,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+
 @Slf4j
 public class JwtExceptionFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(
-            @NonNull HttpServletRequest request,
-            @NonNull HttpServletResponse response,
-            @NonNull FilterChain filterChain) throws ServletException, IOException {
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain) throws ServletException, IOException {
         try {
             filterChain.doFilter(request, response);
         } catch (SecurityException e) {
