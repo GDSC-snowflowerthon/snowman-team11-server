@@ -4,6 +4,7 @@ import com.snowthon.snowman.config.WebClientConfig;
 import com.snowthon.snowman.dto.type.ErrorCode;
 import com.snowthon.snowman.exception.CommonException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -14,11 +15,13 @@ import reactor.core.publisher.Mono;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class WebClientUtil {
 
     private final WebClientConfig webClientConfig;
 
     public <T> T get(String url, Class<T> responseDtoClass) {
+        log.info("get url : {}", url);
         return webClientConfig.webClient().method(HttpMethod.GET)
                 .uri(url)
                 .retrieve()

@@ -1,12 +1,22 @@
 package com.snowthon.snowman.utility;
 
+import com.snowthon.snowman.dto.request.WeatherDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@RequiredArgsConstructor
+@Slf4j
 public class WeatherUtil {
 
     static final double RE = 6371.00877; // 지구 반경(km)
@@ -18,10 +28,12 @@ public class WeatherUtil {
     static final double XO = 43.0; // 기준점 X좌표(GRID)
     static final double YO = 136.0; // 기준점 Y좌표(GRID)
 
+    private final WebClientUtil webClientUtil;
+
     @Value("${weather.api.url}")
     private String url;
 
-    @Value("${weather.api.key}")
+    @Value("${weather.api.secret-key}")
     private String secretKey;
 
     @Value("${weather.api.page-no}")
@@ -36,7 +48,26 @@ public class WeatherUtil {
 
     //base_date, base_time, nx, ny는 각각 받아서 넣어줘야함
 
-    public static Map<String, Integer> transToXY(double lat, double lng) {
+    public WeatherDto getWeather(double lat, double lng)  {
+        Map<String, Integer> stringIntegerMap = transToXY(lat, lng);
+        int nx = stringIntegerMap.get("nx");
+        int ny = stringIntegerMap.get("ny");
+        log.info("nx : {}, ny : {}", nx, ny);
+
+        return webClientUtil.get(
+                 url +
+                        "?serviceKey=" + secretKey +
+                        "&numOfRows=" + numOfRows +
+                        "&pageNo=" + pageNo +
+                        "&dataType=" + dataType +
+                        "&base_date=" + "20240107"+
+                        "&base_time="+ "2300" +
+                        "&nx=" + nx +
+                        "&ny=" + ny,
+                WeatherDto.class);
+    }
+
+    private static Map<String, Integer> transToXY(double lat, double lng) {
         final double DEGRAD = Math.PI / 180.0;
         double re = RE / GRID;
         double slat1 = SLAT1 * DEGRAD;
