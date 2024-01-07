@@ -79,5 +79,8 @@ public class Branch {
         this.branchType = branchType;
         this.createdAt = LocalDateTime.now();
     }
+    /**
+     * TODO : 브랜치 생성 로직
+     */
 
 }
