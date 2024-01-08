@@ -23,6 +23,17 @@ public class WeatherUtil {
     static final double XO = 43.0; // 기준점 X좌표(GRID)
     static final double YO = 136.0; // 기준점 Y좌표(GRID)
 
+
+    /**
+     * 주소 -> 좌표를 찍는 건 다있어요
+     * 좌표 -> 주소를 찍는 게 거의 없어서
+     * 1. x,y 좌표(위도 경도)를 받아옵니다.
+     * 2. kakao 역지오코딩(외부 api)을 불러와서 위치정보를 불러오고
+     * 3. 그 값에 해당하는 weather 테이블의 code가 없다면
+     * 4. 날씨를 요청 합니다 (외부 api).
+     * 5. 만약 있다면 그냥 그 weather테이블의 정로를 정제해서 준다.
+     */
+
     private final WebClientUtil webClientUtil;
 
     @Value("${weather.api.url}")

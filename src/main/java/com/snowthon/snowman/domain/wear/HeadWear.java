@@ -19,10 +19,10 @@ public class HeadWear {
     private Long id;
 
     @Column(name = "beanie_cnt", nullable = false)
-    private int earmuffCnt = 0;
+    private int earmuffCnt;
 
     @Column(name = "balaclava_cnt", nullable = false)
-    private int balaclavaCnt = 0;
+    private int balaclavaCnt;
 
     @Column(name = "e_head_wear")
     @Enumerated(EnumType.STRING)
@@ -41,7 +41,7 @@ public class HeadWear {
         this.balaclavaCnt = balaclavaCnt;
     }
 
-    public void updateCnt(EHeadWear headWear) {
+    public void updateVote(EHeadWear headWear) {
         if (headWear == EHeadWear.EAR_MUFFS) {
             this.earmuffCnt++;
         } else if (headWear == EHeadWear.BALACLAVA) {
