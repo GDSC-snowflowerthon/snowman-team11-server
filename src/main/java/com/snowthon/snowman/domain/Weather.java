@@ -55,11 +55,12 @@ public class Weather {
     private List<Branch> branchList = new ArrayList<>();
 
     @Builder
-    public Weather(String location, String code, ESky sky, ELevel level) {
+    public Weather(String location, String code, ESky sky, ELevel level, int temperature) {
         this.location = location;
         this.code = code;
         this.sky = sky;
         this.level = level;
+        this.temperature = temperature;
         this.createdAt = LocalDateTime.now();
     }
 

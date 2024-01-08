@@ -3,42 +3,51 @@ package com.snowthon.snowman.dto.type;
 import lombok.Getter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 public enum EBranchTime {
 
-    MORNING("오전"),
-    AFTERNOON("오후"),
-    NIGHT("밤"),
-    DAWN("새벽");
+    MORNING("오전", "0500"),
+    AFTERNOON("오후", "1100"),
+    NIGHT("밤", "1700"),
+    DAWN("새벽", "2300");
 
     private final String value;
+    private final String baseTime;
 
-    EBranchTime(String value) {
+    EBranchTime(String value, String baseTime) {
         this.value = value;
+        this.baseTime = baseTime;
     }
 
-    public static String fromTime(String inputTime) {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmm");
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM월 dd일");
-        LocalDateTime currentTime = LocalDateTime.now();
-        LocalDateTime inputDateTime = LocalDateTime.of(currentTime.toLocalDate(), LocalDateTime.parse(inputTime, timeFormatter).toLocalTime());
+    public static Map<String, String> getBaseTimeFromCurrentTime(LocalDateTime currentTime) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
-        if (inputDateTime.isBefore(currentTime)) {
-            inputDateTime = inputDateTime.plusDays(1);
-        }
+        int hour = currentTime.getHour();
 
-        int hour = inputDateTime.getHour();
-        String dayString = inputDateTime.format(dateFormatter);
+        Map<String, String> res = new HashMap<>();
+        String baseDate;
+        String baseTime;
 
-        if (hour >= 6 && hour < 12) {
-            return dayString + " " + MORNING.getValue();
-        } else if (hour >= 12 && hour < 18) {
-            return dayString + " " + AFTERNOON.getValue();
-        } else if (hour >= 18) {
-            return dayString + " " + NIGHT.getValue();
+        if (hour < 6) {
+            baseDate = currentTime.minusDays(1).format(dateFormatter);
+            baseTime = DAWN.getBaseTime();
         } else {
-            return dayString + " " + DAWN.getValue();
+            baseDate = currentTime.format(dateFormatter);
+            if (hour < 12) {
+                baseTime = MORNING.getBaseTime();
+            } else if (hour < 18) {
+                baseTime = AFTERNOON.getBaseTime();
+            } else {
+                baseTime = NIGHT.getBaseTime();
+            }
         }
+
+        res.put("baseDate", baseDate);
+        res.put("baseTime", baseTime);
+
+        return res;
     }
 }
