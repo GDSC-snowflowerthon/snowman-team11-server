@@ -1,5 +1,6 @@
 package com.snowthon.snowman.controller;
 
+import com.snowthon.snowman.annotation.UserId;
 import com.snowthon.snowman.contrant.Constants;
 import com.snowthon.snowman.dto.common.ResponseDto;
 import com.snowthon.snowman.service.WeatherService;

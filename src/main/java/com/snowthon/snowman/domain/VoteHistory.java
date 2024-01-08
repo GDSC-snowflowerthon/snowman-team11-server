@@ -30,6 +30,12 @@ public class VoteHistory {
     @JoinColumn(name="user_id", nullable = false)
     private User user;
 
+    @Column(name = "location", nullable = false)
+    private String location;
+
+    @Column(name = "code", nullable = false)
+    private int code;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "top_wear", nullable = false)
     private ETopWear topWear;
