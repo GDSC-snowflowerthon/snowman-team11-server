@@ -17,6 +17,10 @@ import java.time.LocalDateTime;
 @Table(name = "vote_histories")
 public class VoteHistory {
 
+    /**
+     * 유저가 투표했을때의 데이터를 저장하는 테이블
+     */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

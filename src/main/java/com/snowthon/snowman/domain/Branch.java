@@ -28,30 +28,22 @@ public class Branch {
     @Column(name = "id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "outer_wear_id")
     private OuterWear outerWear;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "top_wear_id")
     private TopWear topWear;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "neck_wear_id")
     private NeckWear neckWear;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "head_wear_id")
     private HeadWear headWear;
 
-    /**
-     * temperature
-     * mainBranch일 경우 필수
-     * 다른 브랜치의 경우 null
-     * 그 시각의 온도를 가져오기
-     */
-    @Column(name = "temperature")
-    private Integer temperature;
 
     /**
      * highestTemperature, lowestTemperature
@@ -80,12 +72,11 @@ public class Branch {
     private LocalDateTime createdAt;
 
     @Builder
-    public Branch(OuterWear outerWear, TopWear topWear, NeckWear neckWear, HeadWear headWear, Integer temperature, Integer highestTemperature, Integer lowestTemperature, String branchTime, Weather weather, EBranchType branchType) {
+    public Branch(OuterWear outerWear, TopWear topWear, NeckWear neckWear, HeadWear headWear, Integer highestTemperature, Integer lowestTemperature, String branchTime, Weather weather, EBranchType branchType) {
         this.outerWear = outerWear;
         this.topWear = topWear;
         this.neckWear = neckWear;
         this.headWear = headWear;
-        this.temperature = temperature;
         this.highestTemperature = highestTemperature;
         this.lowestTemperature = lowestTemperature;
         this.branchTime = branchTime;
