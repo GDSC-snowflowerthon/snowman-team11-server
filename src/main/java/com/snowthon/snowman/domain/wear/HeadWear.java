@@ -26,16 +26,16 @@ public class HeadWear {
 
     @Column(name = "e_head_wear")
     @Enumerated(EnumType.STRING)
-    private EHeadWear headWear;
+    private EHeadWear eheadWear;
 
     @Builder
     public HeadWear(int earmuffCnt, int balaclavaCnt, ELevel level) {
         if (level == ELevel.LEVEL_1) {
-            this.headWear = EHeadWear.BALACLAVA;
+            this.eheadWear = EHeadWear.BALACLAVA;
         } else if (level == ELevel.LEVEL_2 || level == ELevel.LEVEL_3) {
-            this.headWear = EHeadWear.EAR_MUFFS;
+            this.eheadWear = EHeadWear.EAR_MUFFS;
         } else {
-            this.headWear = EHeadWear.NONE;
+            this.eheadWear = EHeadWear.NONE;
         }
         this.earmuffCnt = earmuffCnt;
         this.balaclavaCnt = balaclavaCnt;
@@ -50,14 +50,14 @@ public class HeadWear {
         double totalVotes = earmuffCnt + balaclavaCnt;
         double earmuffScore = (totalVotes > 0) ? (earmuffCnt / totalVotes) * 0.5 : 0;
         double balaclavaScore = (totalVotes > 0) ? (balaclavaCnt / totalVotes) * 0.5 : 0;
-        if (this.headWear == EHeadWear.EAR_MUFFS) {
+        if (this.eheadWear == EHeadWear.EAR_MUFFS) {
             earmuffScore += 0.5;
-        } else if (this.headWear == EHeadWear.BALACLAVA) {
+        } else if (this.eheadWear == EHeadWear.BALACLAVA) {
             balaclavaScore += 0.5;
-        } else if (this.headWear == EHeadWear.NONE) {
+        } else if (this.eheadWear == EHeadWear.NONE) {
             return;
         }
-        this.headWear = earmuffScore > balaclavaScore ? EHeadWear.EAR_MUFFS : EHeadWear.BALACLAVA;
+        this.eheadWear = earmuffScore > balaclavaScore ? EHeadWear.EAR_MUFFS : EHeadWear.BALACLAVA;
     }
 
 }
