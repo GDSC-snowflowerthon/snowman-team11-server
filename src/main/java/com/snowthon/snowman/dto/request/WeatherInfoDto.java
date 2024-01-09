@@ -2,7 +2,7 @@ package com.snowthon.snowman.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.snowthon.snowman.domain.Branch;
-import com.snowthon.snowman.domain.Weather;
+import com.snowthon.snowman.domain.Region;
 import com.snowthon.snowman.dto.type.ESky;
 import com.snowthon.snowman.dto.type.wear.Wear;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -85,16 +85,16 @@ public record WeatherInfoDto(
             }
     }
 
-    public static WeatherInfoDto fromEntity(Weather weather) {
+    public static WeatherInfoDto fromEntity(Region region) {
         return WeatherInfoDto.builder()
-                .weatherId(weather.getId())
-                .location(weather.getLocation())
-                .temperature(weather.getTemperature())
-                .weatherStatus(weather.getSky())
-                .mainBranch(BranchInfo.fromEntity(weather.getMainBranch()))
-                .firstBranch(BranchInfo.fromEntity(weather.getFirstBranch()))
-                .secondBranch(BranchInfo.fromEntity(weather.getSecondBranch()))
-                .thirdBranch(BranchInfo.fromEntity(weather.getThirdBranch()))
+                .weatherId(region.getId())
+                .location(region.getLocation())
+                .temperature(region.getMainBranch().getTemperature())
+                .weatherStatus(region.getMainBranch().getSky())
+                .mainBranch(BranchInfo.fromEntity(region.getMainBranch()))
+                .firstBranch(BranchInfo.fromEntity(region.getFirstBranch()))
+                .secondBranch(BranchInfo.fromEntity(region.getSecondBranch()))
+                .thirdBranch(BranchInfo.fromEntity(region.getThirdBranch()))
                 .build();
     }
 

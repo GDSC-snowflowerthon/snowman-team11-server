@@ -1,12 +1,7 @@
 package com.snowthon.snowman.domain;
 
-import com.snowthon.snowman.domain.wear.HeadWear;
-import com.snowthon.snowman.domain.wear.NeckWear;
-import com.snowthon.snowman.domain.wear.OuterWear;
-import com.snowthon.snowman.domain.wear.TopWear;
 import com.snowthon.snowman.dto.type.EBranchType;
 import com.snowthon.snowman.dto.type.ELevel;
-import com.snowthon.snowman.dto.type.ESky;
 import com.snowthon.snowman.dto.type.ErrorCode;
 import com.snowthon.snowman.exception.CommonException;
 import jakarta.persistence.*;
@@ -16,13 +11,14 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
-@Table(name = "weathers")
-public class Weather {
+@Table(name = "regions")
+public class Region {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,15 +31,6 @@ public class Weather {
     @Column(name = "code", nullable = false)
     private String code;    //지역 코드
 
-    @Column(name ="sky", nullable = false)
-    private ESky sky; //눈 비 구분
-
-    @Column(name = "temperature", nullable = false)
-    private Integer temperature; //온도 메인브랜치에서 필요한 값
-
-    @Column(name = "level", nullable = false)
-    private ELevel level;
-
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
@@ -51,17 +38,24 @@ public class Weather {
     /**
      * 양방향 매핑
      */
-    @OneToMany(mappedBy = "weather", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "region", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Branch> branchList = new ArrayList<>();
 
+
     @Builder
-    public Weather(String location, String code, ESky sky, ELevel level, int temperature) {
+    public Region(String location, String code, List<Branch> branchList) {
         this.location = location;
         this.code = code;
-        this.sky = sky;
-        this.level = level;
-        this.temperature = temperature;
+        this.branchList = branchList;
         this.createdAt = LocalDateTime.now();
+    }
+
+    public static Region createRegion(String location, String code, List<Branch> branchList) {
+        return Region.builder()
+                .location(location)
+                .code(code)
+                .branchList(branchList)
+                .build();
     }
 
     public Branch getMainBranch() {

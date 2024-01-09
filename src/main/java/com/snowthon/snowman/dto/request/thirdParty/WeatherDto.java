@@ -1,10 +1,12 @@
 package com.snowthon.snowman.dto.request.thirdParty;
 
+import com.snowthon.snowman.domain.ForecastData;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
@@ -64,6 +66,18 @@ public class WeatherDto {
             this.fcstTime = fcstTime;
             this.fcstValue = fcstValue;
         }
+    }
+
+    public static List<ForecastData> createFromWeatherDto(WeatherDto weatherDto) {
+        return weatherDto.getResponse().getBody().getItems().getItem().stream()
+                .filter(item -> "SKY".equals(item.getCategory()) || "TMP".equals(item.getCategory()))
+                .map(item -> ForecastData.builder()
+                        .category(item.getCategory())
+                        .fcstDate(item.getFcstDate())
+                        .fcstTime(item.getFcstTime())
+                        .fcstValue(item.getFcstValue())
+                        .build())
+                .collect(Collectors.toList());
     }
     /**
      * 카테고리에서 필요한 값

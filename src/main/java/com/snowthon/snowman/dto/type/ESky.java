@@ -9,6 +9,7 @@ public enum ESky {
     SNOW("눈"),
 
     ;
+     //없음(0), 비(1,4), 비/눈(2), 눈(3)
 
     private final String description;
 
@@ -16,13 +17,13 @@ public enum ESky {
         this.description = description;
     }
 
-    public static ESky getSky(String sky) {
-        if (sky.contains("맑음")) {
-            return CLEAR;
-        } else if (sky.contains("비")) {
-            return RAIN;
-        } else {
-            return SNOW;
-        }
+    public static ESky getSky(String skyCode) {
+        return switch (skyCode) {
+            case "0" -> CLEAR;
+            case "1", "4" -> RAIN;
+            case "2", "3" -> SNOW;
+            default -> null;
+        };
     }
+
 }

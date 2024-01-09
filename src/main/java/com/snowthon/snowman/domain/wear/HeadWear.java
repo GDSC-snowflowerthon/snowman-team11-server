@@ -41,6 +41,14 @@ public class HeadWear {
         this.balaclavaCnt = balaclavaCnt;
     }
 
+    public static HeadWear createHeadWear(int earmuffCnt, int balaclavaCnt, ELevel level) {
+        return HeadWear.builder()
+                .earmuffCnt(earmuffCnt)
+                .balaclavaCnt(balaclavaCnt)
+                .level(level)
+                .build();
+    }
+
     public void updateVote(EHeadWear headWear) {
         if (headWear == EHeadWear.EAR_MUFFS) {
             this.earmuffCnt++;

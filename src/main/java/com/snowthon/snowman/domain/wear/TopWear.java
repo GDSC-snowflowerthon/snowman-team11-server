@@ -38,6 +38,14 @@ public class TopWear {
         }
     }
 
+    public static TopWear createTopWear(int neatCnt, int longSleeveCnt, ELevel level) {
+        return TopWear.builder()
+                .neatCnt(neatCnt)
+                .longSleeveCnt(longSleeveCnt)
+                .level(level)
+                .build();
+    }
+
     /**
      * 투표했을때 업데이트
      */
