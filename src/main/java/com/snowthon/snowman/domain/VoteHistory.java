@@ -1,5 +1,6 @@
 package com.snowthon.snowman.domain;
 
+import com.snowthon.snowman.dto.request.VoteRequestDto;
 import com.snowthon.snowman.dto.type.wear.EHeadWear;
 import com.snowthon.snowman.dto.type.wear.ENeckWear;
 import com.snowthon.snowman.dto.type.wear.EOuterWear;
@@ -34,7 +35,7 @@ public class VoteHistory {
     private String location;
 
     @Column(name = "code", nullable = false)
-    private int code;
+    private String code;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "top_wear", nullable = false)
@@ -59,8 +60,10 @@ public class VoteHistory {
     private LocalDateTime voteTime;
 
     @Builder
-    public VoteHistory(User user, ETopWear topWear, EOuterWear outer, EHeadWear headWear, ENeckWear neckWear, int temperature, LocalDateTime voteTime) {
+    public VoteHistory(User user, String location, String code, ETopWear topWear, EOuterWear outer, EHeadWear headWear, ENeckWear neckWear, int temperature, LocalDateTime voteTime) {
         this.user = user;
+        this.location = location;
+        this.code = code;
         this.topWear = topWear;
         this.outer = outer;
         this.headWear = headWear;
@@ -68,4 +71,20 @@ public class VoteHistory {
         this.temperature = temperature;
         this.voteTime = voteTime;
     }
+
+    //투표를 저장할 때 사용
+    public static VoteHistory createFrom(User user, Region region, Branch mainBranch, VoteRequestDto requestDto) {
+        return VoteHistory.builder()
+                .user(user)
+                .location(region.getLocation())
+                .code(region.getCode())
+                .temperature(mainBranch.getTemperature())
+                .topWear(requestDto.getTopWear())
+                .outer(requestDto.getOuter())
+                .headWear(requestDto.getHeadWear())
+                .neckWear(requestDto.getNeckWear())
+                .voteTime(LocalDateTime.now())
+                .build();
+    }
+
 }
