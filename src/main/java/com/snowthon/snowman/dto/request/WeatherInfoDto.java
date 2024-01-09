@@ -13,7 +13,7 @@ import lombok.Builder;
 public record WeatherInfoDto(
 
         @NotNull(message = "날씨 ID는 필수입니다.")
-        @JsonProperty("weather_id") @Schema(description = "날씨 ID", example = "1")
+        @JsonProperty("weatherId") @Schema(description = "날씨 ID", example = "1")
         Long weatherId,
 
         @NotNull(message = "위치는 필수입니다.")
@@ -25,50 +25,50 @@ public record WeatherInfoDto(
         int temperature,
 
         @NotNull(message = "날씨 상태는 필수입니다.")
-        @JsonProperty("weather_status") @Schema(description = "날씨 상태", example = "SNOW")
+        @JsonProperty("weatherStatus") @Schema(description = "날씨 상태", example = "SNOW")
         ESky weatherStatus,
 
-        @JsonProperty("main_branch") @Schema(description = "메인 분기")
+        @JsonProperty("mainBranch") @Schema(description = "메인 분기")
         @NotNull(message = "메인 분기는 필수입니다.")
         BranchInfo mainBranch,
 
         @NotNull(message = "첫 번째 분기는 필수입니다.")
-        @JsonProperty("first_branch") @Schema(description = "첫 번째 분기")
+        @JsonProperty("firstBranch") @Schema(description = "첫 번째 분기")
         BranchInfo firstBranch,
 
         @NotNull(message = "두 번째 분기는 필수입니다.")
-        @JsonProperty("second_branch") @Schema(description = "두 번째 분기")
+        @JsonProperty("secondBranch") @Schema(description = "두 번째 분기")
         BranchInfo secondBranch,
 
         @NotNull(message = "세 번째 분기는 필수입니다.")
-        @JsonProperty("third_branch") @Schema(description = "세 번째 분기")
+        @JsonProperty("thirdBranch") @Schema(description = "세 번째 분기")
         BranchInfo thirdBranch
 ) {
     @Builder
     public record BranchInfo(
             @NotNull(message = "상의 정보는 필수입니다.")
-            @JsonProperty("top_wear") @Schema(description = "상의 정보", example = "LONG_SLEEVE")
+            @JsonProperty("topWear") @Schema(description = "상의 정보", example = "LONG_SLEEVE")
             Wear topWear,
 
             @NotNull(message = "목도리 정보는 필수입니다.")
-            @JsonProperty("neck_wear") @Schema(description = "목도리 정보", example = "SCARF")
+            @JsonProperty("neckWear") @Schema(description = "목도리 정보", example = "SCARF")
             Wear neckWear,
 
             @NotNull(message = "아우터 정보는 필수입니다.")
-            @JsonProperty("outer_wear") @Schema(description = "아우터 정보", example = "COAT")
+            @JsonProperty("outerWear") @Schema(description = "아우터 정보", example = "COAT")
             Wear outerWear,
 
             @NotNull(message = "머리 정보는 필수입니다.")
-            @JsonProperty("head_wear") @Schema(description = "머리 정보", example = "BALACLAVA")
+            @JsonProperty("headWear") @Schema(description = "머리 정보", example = "BALACLAVA")
             Wear headWear,
 
-            @JsonProperty("highest_temperature") @Schema(description = "최고 기온", example = "10")
+            @JsonProperty("highestTemperature") @Schema(description = "최고 기온", example = "10")
             Integer highestTemperature,
 
-            @JsonProperty("lowest_temperature") @Schema(description = "최저 기온", example = "-10")
+            @JsonProperty("lowestTemperature") @Schema(description = "최저 기온", example = "-10")
             Integer lowestTemperature,
 
-            @JsonProperty("branch_time") @Schema(description = "분기 시간", example = "1월 3일 오후")
+            @JsonProperty("branchTime") @Schema(description = "분기 시간", example = "1월 3일 오후")
             String branchTime
     ) {
 
