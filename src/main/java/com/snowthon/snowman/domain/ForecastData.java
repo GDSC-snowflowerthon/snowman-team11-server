@@ -85,8 +85,6 @@ public class ForecastData {
                 .mapToInt(data -> Integer.parseInt(data.getFcstValue()))
                 .sum();
 
-        // 한 쪽을 float로 캐스팅하여 소수점 이하의 값을 얻습니다.
-        log.info("data = {}",(float) totalTemperature / temperatureData.size());
         return (float) totalTemperature / temperatureData.size();
     }
 

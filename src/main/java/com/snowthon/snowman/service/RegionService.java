@@ -2,7 +2,6 @@ package com.snowthon.snowman.service;
 
 import com.snowthon.snowman.contrant.Constants;
 import com.snowthon.snowman.domain.Branch;
-import com.snowthon.snowman.domain.ForecastData;
 import com.snowthon.snowman.domain.Region;
 import com.snowthon.snowman.dto.request.WeatherInfoDto;
 import com.snowthon.snowman.dto.request.thirdParty.RegionDto;
@@ -25,7 +24,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +35,6 @@ public class RegionService {
     private final ForecastDataRepository forecastDataRepository;
     private final ForecastDateUtil forecastDateUtil;
     private final RegionRepository regionRepository;
-    private final BranchRepository branchRepository;
 
 
     //2-1. 날씨 정보 조회
@@ -78,5 +75,15 @@ public class RegionService {
         regionRepository.deleteAll();
     }
 
+    /* 매 시간별 mainBranch 날씨, 시간값 업데이트 db삭제 */
+    @Transactional
+    @Scheduled(cron = "0 0 1-5,7-11,13-17,19-23 * * *")
+    public void updateMainBranch() {
+        List<Region> regionList = regionRepository.findAll();
+        for (Region region : regionList) {
+            Branch mainBranch = region.getMainBranch();
+            mainBranch.updateMainBranch(forecastDataRepository.findByBranch(mainBranch));
+        }
+    }
 
 }
