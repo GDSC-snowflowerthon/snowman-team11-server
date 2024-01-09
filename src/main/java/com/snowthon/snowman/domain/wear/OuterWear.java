@@ -48,6 +48,15 @@ public class OuterWear {
         this.coatCnt = coatCnt;
     }
 
+    public static OuterWear createOuterWear(int longPaddingCnt, int shortPaddingCnt, int coatCnt, ELevel level) {
+        return OuterWear.builder()
+                .longPaddingCnt(longPaddingCnt)
+                .shortPaddingCnt(shortPaddingCnt)
+                .coatCnt(coatCnt)
+                .level(level)
+                .build();
+    }
+
     public void updateVote(EOuterWear outerWear) {
         if (outerWear == EOuterWear.LONG_PADDING) {
             this.longPaddingCnt++;

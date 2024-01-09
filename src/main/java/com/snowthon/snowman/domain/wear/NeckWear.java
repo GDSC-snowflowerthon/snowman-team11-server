@@ -36,6 +36,13 @@ public class NeckWear {
         this.scarfCnt = scarfCnt;
     }
 
+    public static NeckWear createNeckWear(int scarfCnt, ELevel level) {
+        return NeckWear.builder()
+                .scarfCnt(scarfCnt)
+                .level(level)
+                .build();
+    }
+
     public void updateVote(ENeckWear neckWear) {
         if (neckWear == ENeckWear.SCARF) {
             this.scarfCnt++;

@@ -23,7 +23,7 @@ public enum ELevel {
         this.description = description;
     }
 
-    public static ELevel getLevel(int temperature) {
+    public static ELevel getLevel(Float temperature) {
         if (temperature <= -15) {
             return LEVEL_1;
         } else if (temperature <= -10) {

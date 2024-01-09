@@ -60,6 +60,10 @@ public class WeatherUtil {
         int ny = stringIntegerMap.get("ny");
         log.info("nx : {}, ny : {}", nx, ny);
 
+        // 헤더 맵을 생성하고, Accept 헤더를 JSON으로 설정합니다.
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Accept", "application/json");
+
         return webClientUtil.get(
                 url +
                         "?serviceKey=" + secretKey +
@@ -70,9 +74,9 @@ public class WeatherUtil {
                         "&base_time=" + base_time +
                         "&nx=" + nx +
                         "&ny=" + ny,
-                WeatherDto.class, null);
+                WeatherDto.class,
+                headers); // 헤더 맵을 get 메서드에 전달합니다.
     }
-
     private static Map<String, Integer> transToXY(double lat, double lng) {
         final double DEGRAD = Math.PI / 180.0;
         double re = RE / GRID;
