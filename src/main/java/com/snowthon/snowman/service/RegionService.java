@@ -51,17 +51,6 @@ public class RegionService {
         Region region = regionRepository.findByCode(document.getCode())
                 .orElseGet(() -> {
                     Map<String, String> baseDateAndTime = EBranchTime.getBaseTimeFromCurrentTime(LocalDateTime.now());
-//                    List<ForecastData> fromWeatherDto = WeatherDto.createFromWeatherDto(
-//                            weatherUtil.getWeather(
-//                                    lat,
-//                                    lng,
-//                                    baseDateAndTime.get("baseDate"),
-//                                    baseDateAndTime.get("baseTime")
-//                            )
-//                    );
-//                    forecastDataRepository.saveAll(fromWeatherDto);
-//                    List<Branch> branchList = forecastDateUtil.createBranchesFromForecastData(fromWeatherDto);
-
                     List<Branch> branchList = forecastDateUtil.createBranchesFromForecastData(
                             WeatherDto.createFromWeatherDto(
                                     weatherUtil.getWeather(
