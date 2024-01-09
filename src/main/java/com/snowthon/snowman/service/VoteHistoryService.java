@@ -29,6 +29,11 @@ public class VoteHistoryService {
 
         VoteHistory voteHistory = VoteHistory.createFrom(user, region, mainBranch, requestDto);
 
+        mainBranch.getHeadWear().updateVote(requestDto.getHeadWear());
+        mainBranch.getNeckWear().updateVote(requestDto.getNeckWear());
+        mainBranch.getTopWear().updateVote(requestDto.getTopWear());
+        mainBranch.getOuterWear().updateVote(requestDto.getOuter());
+
         voteHistoryRepository.save(voteHistory);
     }
 }
