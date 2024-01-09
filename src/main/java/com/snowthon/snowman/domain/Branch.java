@@ -184,7 +184,8 @@ public class Branch {
         ForecastData currentData = findCurrentForecastData(forecastDataList, currentTime);
 
         if (currentData != null) {
-            this.sky = ESky.getSky(currentData.getCategory().equals("SKY") ? currentData.getFcstValue() : String.valueOf(ESky.CLEAR));
+            log.info("sky status = {}",currentData.getCategory().equals("PTY"));
+            this.sky = ESky.getSky(currentData.getCategory().equals("PTY") ? currentData.getFcstValue() : String.valueOf(ESky.CLEAR));
             this.temperature = currentData.getCategory().equals("TMP") ? Integer.parseInt(currentData.getFcstValue()) : this.temperature;
         }
     }

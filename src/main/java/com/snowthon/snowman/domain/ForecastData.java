@@ -93,7 +93,7 @@ public class ForecastData {
 
     public static String getSkyCondition(List<ForecastData> forecastData) {
         return forecastData.stream()
-                .filter(data -> "SKY".equals(data.getCategory()))
+                .filter(data -> "PTY".equals(data.getCategory()))
                 .map(ForecastData::getFcstValue)
                 .findFirst()
                 .orElse("0");
