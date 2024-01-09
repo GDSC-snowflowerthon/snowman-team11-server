@@ -35,6 +35,7 @@ public class RegionService {
     private final BranchRepository branchRepository;
 
 
+    //2-1. 날씨 정보 조회
     @Transactional
     public WeatherInfoDto getWeather(double lat, double lng) {
         RegionDto regionDto = reverseGeoUtil.getRegion(lat, lng);
@@ -65,7 +66,6 @@ public class RegionService {
                 log.info("branchList: {}", branchList);
                 Region region = Region.createRegion(document.getAddressName(), code, branchList);
                 branchList.forEach(branch -> branch.updateRegion(region));
-//                branchRepository.saveAll(branchList);
                 regionRepository.save(region);
                 return WeatherInfoDto.fromEntity(region);
 
