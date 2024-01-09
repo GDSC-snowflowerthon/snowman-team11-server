@@ -52,25 +52,20 @@ public class VoteHistory {
     @Column(name = "neck_wear")
     private ENeckWear neckWear;
 
-    @Column(name = "highest_temperature", nullable = false)
-    private int highestTemperature;
-
-    @Column(name = "lowest_temperature", nullable = false)
-    private int lowestTemperature;
-
+    @Column(name = "temperature", nullable = false)
+    private int temperature;
 
     @Column(name ="vote_time", nullable = false)
     private LocalDateTime voteTime;
 
     @Builder
-    public VoteHistory(User user, ETopWear topWear, EOuterWear outer, EHeadWear headWear, ENeckWear neckWear, int highestTemperature, int lowestTemperature, LocalDateTime voteTime) {
+    public VoteHistory(User user, ETopWear topWear, EOuterWear outer, EHeadWear headWear, ENeckWear neckWear, int temperature, LocalDateTime voteTime) {
         this.user = user;
         this.topWear = topWear;
         this.outer = outer;
         this.headWear = headWear;
         this.neckWear = neckWear;
-        this.highestTemperature = highestTemperature;
-        this.lowestTemperature = lowestTemperature;
+        this.temperature = temperature;
         this.voteTime = voteTime;
     }
 }
