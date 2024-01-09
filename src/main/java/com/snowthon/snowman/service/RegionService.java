@@ -8,7 +8,6 @@ import com.snowthon.snowman.dto.request.thirdParty.RegionDto;
 import com.snowthon.snowman.dto.request.thirdParty.WeatherDto;
 import com.snowthon.snowman.dto.type.EBranchTime;
 import com.snowthon.snowman.repository.BranchRepository;
-import com.snowthon.snowman.repository.ForecastDataRepository;
 import com.snowthon.snowman.repository.RegionRepository;
 import com.snowthon.snowman.utility.ForecastDateUtil;
 import com.snowthon.snowman.utility.ReverseGeoUtil;
@@ -16,6 +15,7 @@ import com.snowthon.snowman.utility.WeatherUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -35,6 +35,7 @@ public class RegionService {
     private final BranchRepository branchRepository;
 
 
+    //2-1. 날씨 정보 조회
     @Transactional
     public WeatherInfoDto getWeather(double lat, double lng) {
         RegionDto regionDto = reverseGeoUtil.getRegion(lat, lng);
@@ -65,13 +66,20 @@ public class RegionService {
                 log.info("branchList: {}", branchList);
                 Region region = Region.createRegion(document.getAddressName(), code, branchList);
                 branchList.forEach(branch -> branch.updateRegion(region));
-//                branchRepository.saveAll(branchList);
                 regionRepository.save(region);
                 return WeatherInfoDto.fromEntity(region);
 
             }
         }
         return null; // 조건에 해당하는 Weather 정보가 없는 경우
+    }
+
+
+    /* 매 분기별 db삭제 */
+    @Transactional
+    @Scheduled(cron = "0 0 6,12,18,0 * * *")
+    public void deleteAllRegions() {
+        regionRepository.deleteAll();
     }
 
 

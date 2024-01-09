@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(Constants.API_PREFIX + "/weathers")
-public class WeatherController {
+public class RegionController {
 
     private final RegionService regionService;
 
