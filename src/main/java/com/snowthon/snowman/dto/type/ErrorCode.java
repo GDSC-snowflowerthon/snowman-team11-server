@@ -17,6 +17,7 @@ public enum ErrorCode {
     NOT_FOUND_AUTHORIZATION_HEADER(40401, HttpStatus.NOT_FOUND, "Authorization 헤더가 존재하지 않습니다."),
     NOT_FOUND_USER(40401, HttpStatus.NOT_FOUND, "해당 사용자가 존재하지 않습니다."),
     NOT_FOUND_BRANCH(40402, HttpStatus.NOT_FOUND, "해당 브랜치가 존재하지 않습니다."),
+    NOT_FOUND_REGION(40403, HttpStatus.NOT_FOUND, "해당 지역이 존재하지 않습니다."),
 
 
     // Invalid Argument Error

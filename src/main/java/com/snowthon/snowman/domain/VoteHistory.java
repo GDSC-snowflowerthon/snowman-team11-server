@@ -73,16 +73,16 @@ public class VoteHistory {
     }
 
     //투표를 저장할 때 사용
-    public static VoteHistory createFrom(User user, Region region, Branch mainBranch, VoteRequestDto requestDto) {
+    public static VoteHistory createFrom(User user, Region region, Branch mainBranch, ETopWear topWear, EOuterWear outerWear, EHeadWear headWear, ENeckWear neckWear) {
         return VoteHistory.builder()
                 .user(user)
                 .location(region.getLocation())
                 .code(region.getCode())
                 .temperature(mainBranch.getTemperature())
-                .topWear(requestDto.getTopWear())
-                .outer(requestDto.getOuter())
-                .headWear(requestDto.getHeadWear())
-                .neckWear(requestDto.getNeckWear())
+                .topWear(topWear)
+                .outer(outerWear)
+                .headWear(headWear)
+                .neckWear(neckWear)
                 .voteTime(LocalDateTime.now())
                 .build();
     }
