@@ -8,11 +8,13 @@ import com.snowthon.snowman.repository.UserRepository;
 import com.snowthon.snowman.security.info.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CustomUserDetailService {
+public class CustomUserDetailService implements UserDetailsService {
     private final UserRepository userRepository;
 
     public UserDetails loadUserByEmailAndPhoneNumber(String email, String phoneNumber, String nickname) {
@@ -30,5 +32,10 @@ public class CustomUserDetailService {
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_LOGIN_USER));
 
         return UserPrincipal.createByUserSecurityForm(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
     }
 }
