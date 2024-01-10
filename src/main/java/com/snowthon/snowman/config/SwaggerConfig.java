@@ -49,7 +49,7 @@ public class SwaggerConfig {
                                 .url("http://localhost:8080")
                                 .description("Local Server"),
                         new io.swagger.v3.oas.models.servers.Server()
-                                .url("https://pengdori.dcs.jjuuuunnii.com")
+                                .url("https://jjuuuunnii.com")
                                 .description("Dev Server")));
     }
 }
