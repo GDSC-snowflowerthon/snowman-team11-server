@@ -1,18 +1,15 @@
 package com.snowthon.snowman.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
 public record UserLoginDto(
 
-        @NotNull(message = "이메일은 빈값이 될 수 없습니다.")
-        String email,
-
-        @NotNull(message = "전화번호는 빈값이 될 수 없습니다.")
-        String phoneNumber,
-
-        @NotNull(message = "닉네임은 빈 값이 될 수 없습니다.")
-        String nickname
+        @NotNull(message = "providerId는 빈값이 될 수 없습니다.")
+        @JsonProperty("providerId") @Schema(description = "프로바이더 아이디", example = "203912941")
+        Long providerId
 ) {
 }

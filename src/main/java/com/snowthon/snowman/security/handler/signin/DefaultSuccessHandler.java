@@ -47,8 +47,8 @@ public class DefaultSuccessHandler implements AuthenticationSuccessHandler {
         Map<String, Object> result = new HashMap<>();
         result.put("success", true);
         result.put("data", Map.of(
-                        "access_token", tokenDto.accessToken(),
-                        "refresh_token", tokenDto.refreshToken()
+                        "accessToken", tokenDto.accessToken(),
+                        "refreshToken", tokenDto.refreshToken()
                 )
         );
         result.put("error", null);

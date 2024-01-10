@@ -24,9 +24,8 @@ public class UserController {
     private final VoteHistoryService voteHistoryService;
 
     @GetMapping("/vote-history")
-    @Operation(summary = "아카이빙", description = "유저의 투표 기록들을 가져옵니다")
+    @Operation(summary = "아카이빙 모아보기", description = "유저의 투표 기록들을 가져옵니다")
     public ResponseDto<?> archiving(@UserId Long userId) {
-
         return ResponseDto.ok(voteHistoryService.getVoteHistoriesByUser(userId));
     }
 

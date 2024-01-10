@@ -45,7 +45,6 @@ public class RegionController {
     @PostMapping("/{regionId}/poll")
     @Operation(summary = "투표 하기", description = "투표를 반영합니다")
     public ResponseDto<?> createVote(@UserId Long userId, @PathVariable Long regionId, @RequestBody VoteRequestDto requestDto) {
-
         voteHistoryService.createVote(regionId, requestDto, userId);
         return ResponseDto.ok(null);
     }

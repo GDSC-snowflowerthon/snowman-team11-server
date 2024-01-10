@@ -2,7 +2,6 @@ package com.snowthon.snowman.service;
 
 import com.snowthon.snowman.domain.*;
 import com.snowthon.snowman.dto.request.VoteRequestDto;
-import com.snowthon.snowman.dto.response.AchivingDetailDto;
 import com.snowthon.snowman.dto.response.ArchivingDto;
 import com.snowthon.snowman.dto.type.ErrorCode;
 import com.snowthon.snowman.exception.CommonException;
@@ -58,33 +57,15 @@ public class VoteHistoryService {
     }
 
     //4-1. 모아 보기
-    public List<ArchivingDto> getVoteHistoriesByUser(Long userId) {
+    public ArchivingDto getVoteHistoriesByUser(Long userId) {
         List<VoteHistory> voteHistories = voteHistoryRepository.findByUserId(userId);
-
-        return voteHistories.stream()
-                .map(voteHistory -> new ArchivingDto(
-                        voteHistory.getId(),
-                        voteHistory.getTopWear(),
-                        voteHistory.getOuter(),
-                        voteHistory.getHeadWear(),
-                        voteHistory.getNeckWear(),
-                        voteHistory.getVoteTime()))
-                .collect(Collectors.toList());
+        return ArchivingDto.fromEntity(voteHistories.stream()
+                .map(ArchivingDto.ArchivingDetailDto::fromEntity).collect(Collectors.toList()));
     }
 
     //4-2. 모아 보기(상세)
-    public AchivingDetailDto getVoteHistoryById(Long voteHistoryId) {
-        VoteHistory voteHistory = voteHistoryRepository.findById(voteHistoryId)
-                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_HISTORY));
-        return new AchivingDetailDto(
-                voteHistory.getId(),
-                voteHistory.getLocation(),
-                voteHistory.getTopWear(),
-                voteHistory.getOuter(),
-                voteHistory.getHeadWear(),
-                voteHistory.getNeckWear(),
-                voteHistory.getSky(),
-                voteHistory.getTemperature(),
-                voteHistory.getVoteTime());
+    public ArchivingDto.ArchivingDetailDto getVoteHistoryById(Long voteHistoryId) {
+        return ArchivingDto.ArchivingDetailDto.fromEntity(voteHistoryRepository.findById(voteHistoryId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_HISTORY)));
     }
 }
