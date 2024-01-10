@@ -19,19 +19,22 @@ import java.util.Collections;
 public class UserPrincipal implements UserDetails {
     @Getter private final Long id;
     @Getter private final ERole role;
+    private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public static UserPrincipal createByUserSecurityForm(UserRepository.UserSecurityForm form) {
         return UserPrincipal.builder()
                 .id(form.getId())
+                .password(form.getPassword())
                 .authorities(Collections.singleton(new SimpleGrantedAuthority(Constants.USER_ROLE)))
                 .build();
     }
 
-    public static UserPrincipal createByUserId(Long userId) {
+    public static UserPrincipal createByUserId(Long userId, String password) {
         return UserPrincipal.builder()
                 .id(userId)
                 .authorities(Collections.singleton(new SimpleGrantedAuthority(Constants.USER_ROLE)))
+                .password(password)
                 .build();
     }
 
@@ -42,7 +45,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override

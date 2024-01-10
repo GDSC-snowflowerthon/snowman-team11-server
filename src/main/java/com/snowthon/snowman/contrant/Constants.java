@@ -16,6 +16,7 @@ public class Constants {
             "/v3/api-docs.html/**",
             "/v3/api-docs/**",
             "/swagger-ui/**",
-            "/api/v1/weathers"
+            "/api/v1/weathers",
+            "/api/v1/auth/login"
     );
 }

@@ -4,10 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.snowthon.snowman.contrant.Constants;
 import com.snowthon.snowman.intercepter.pre.UserIdArgumentResolver;
 import com.snowthon.snowman.intercepter.pre.UserIdInterceptor;
+import com.snowthon.snowman.security.service.CustomUserDetailService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -20,6 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebMVCConfig implements WebMvcConfigurer {
     private final UserIdArgumentResolver userIdArgumentResolver;
+    private final CustomUserDetailService customUserDetailService;
 
     @Override
     public void addArgumentResolvers(@NonNull List<HandlerMethodArgumentResolver> resolvers) {
@@ -38,4 +43,5 @@ public class WebMVCConfig implements WebMvcConfigurer {
     public ObjectMapper objectMapper(){
         return new ObjectMapper();
     }
+
 }
