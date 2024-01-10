@@ -8,6 +8,7 @@ import com.snowthon.snowman.repository.UserRepository;
 import com.snowthon.snowman.repository.VoteHistoryRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -51,5 +52,10 @@ public class VoteHistoryService {
                 .orElseThrow(() -> new RuntimeException("Region not found"));
 
         return userRegionVoteRepository.existsByUserAndRegion(user, region);
+    }
+
+    @Scheduled(cron = "0 0 6,12,18,0 * * *")
+    public void clearUserRegionVoteTable() {
+        userRegionVoteRepository.deleteAll();
     }
 }
