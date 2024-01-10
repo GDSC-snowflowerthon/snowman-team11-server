@@ -1,6 +1,7 @@
 package com.snowthon.snowman.domain;
 
 import com.snowthon.snowman.dto.request.VoteRequestDto;
+import com.snowthon.snowman.dto.type.ESky;
 import com.snowthon.snowman.dto.type.wear.EHeadWear;
 import com.snowthon.snowman.dto.type.wear.ENeckWear;
 import com.snowthon.snowman.dto.type.wear.EOuterWear;
@@ -53,14 +54,20 @@ public class VoteHistory {
     @Column(name = "neck_wear")
     private ENeckWear neckWear;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sky")
+    private ESky sky;
+
     @Column(name = "temperature", nullable = false)
     private int temperature;
+
+
 
     @Column(name ="vote_time", nullable = false)
     private LocalDateTime voteTime;
 
     @Builder
-    public VoteHistory(User user, String location, String code, ETopWear topWear, EOuterWear outer, EHeadWear headWear, ENeckWear neckWear, int temperature, LocalDateTime voteTime) {
+    public VoteHistory(User user, String location, String code, ETopWear topWear, EOuterWear outer, EHeadWear headWear, ENeckWear neckWear, ESky sky, int temperature, LocalDateTime voteTime) {
         this.user = user;
         this.location = location;
         this.code = code;
@@ -68,6 +75,7 @@ public class VoteHistory {
         this.outer = outer;
         this.headWear = headWear;
         this.neckWear = neckWear;
+        this.sky = sky;
         this.temperature = temperature;
         this.voteTime = voteTime;
     }
@@ -83,6 +91,7 @@ public class VoteHistory {
                 .outer(outerWear)
                 .headWear(headWear)
                 .neckWear(neckWear)
+                .sky(mainBranch.getSky())
                 .voteTime(LocalDateTime.now())
                 .build();
     }
