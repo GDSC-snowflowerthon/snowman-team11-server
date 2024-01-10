@@ -83,7 +83,7 @@ public class ArchivingDto{
                         return ArchivingDetailDto.builder()
                                 .archiveId(voteHistory.getId())
                                 .topWear(voteHistory.getTopWear())
-                                .outerWear(voteHistory.getOuter())
+                                .outerWear(voteHistory.getOuterWear())
                                 .headWear(voteHistory.getHeadWear())
                                 .neckWear(voteHistory.getNeckWear())
                                 .weatherStatus(voteHistory.getSky())

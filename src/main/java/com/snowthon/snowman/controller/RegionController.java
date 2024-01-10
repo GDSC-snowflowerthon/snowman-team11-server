@@ -10,11 +10,13 @@ import com.snowthon.snowman.service.VoteHistoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping(Constants.API_PREFIX + "/weathers")
 public class RegionController {
 
@@ -43,9 +45,9 @@ public class RegionController {
 
     //3-2. 투표 하기
     @PostMapping("/{regionId}/poll")
-    @Operation(summary = "투표 하기", description = "투표를 반영합니다")
-    public ResponseDto<?> createVote(@UserId Long userId, @PathVariable Long regionId, @RequestBody VoteRequestDto requestDto) {
-        voteHistoryService.createVote(regionId, requestDto, userId);
+    @Operation(summary = "투표 하기", description = "투표를 합니다.")
+    public ResponseDto<?> createVote(@UserId Long userId, @PathVariable Long regionId, @RequestBody VoteRequestDto voteRequestDto) {
+        voteHistoryService.createVote(regionId, voteRequestDto, userId);
         return ResponseDto.ok(null);
     }
 

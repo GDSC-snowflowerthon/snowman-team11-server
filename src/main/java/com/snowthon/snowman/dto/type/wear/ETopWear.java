@@ -18,8 +18,7 @@ public enum ETopWear implements Wear{
         this.value = value;
     }
 
-    @Override
-    public Wear fromValue(String value) {
+    public static ETopWear fromValue(String value) {
         for (ETopWear topWear : ETopWear.values()) {
             if (topWear.getValue().equals(value)) {
                 return topWear;

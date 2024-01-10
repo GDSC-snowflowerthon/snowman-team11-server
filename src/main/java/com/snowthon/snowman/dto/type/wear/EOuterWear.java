@@ -19,8 +19,7 @@ public enum EOuterWear implements Wear{
         this.value = value;
     }
 
-    @Override
-    public Wear fromValue(String value) {
+    public static EOuterWear fromValue(String value) {
         for (EOuterWear outer : EOuterWear.values()) {
             if (outer.getValue().equals(value)) {
                 return outer;
