@@ -37,9 +37,10 @@ out/
 .vscode/
 
 
-/src/main/resources/application.yml
+src/main/resources/application.yml
 
-/application/**
-/dependencies/**
-/spring-boot-loader/**
-/snapshot-dependencies/**
+application/**
+dependencies/**
+spring-boot-loader/**
+snapshot-dependencies/**
+
