@@ -1,6 +1,5 @@
 package com.snowthon.snowman.domain;
 
-import com.snowthon.snowman.dto.request.VoteRequestDto;
 import com.snowthon.snowman.dto.type.ESky;
 import com.snowthon.snowman.dto.type.wear.EHeadWear;
 import com.snowthon.snowman.dto.type.wear.ENeckWear;
@@ -43,8 +42,8 @@ public class VoteHistory {
     private ETopWear topWear;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "`outer`", nullable = false)
-    private EOuterWear outer;
+    @Column(name = "outer_wear", nullable = false)
+    private EOuterWear outerWear;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "head_wear")
@@ -65,12 +64,12 @@ public class VoteHistory {
     private LocalDateTime voteTime;
 
     @Builder
-    public VoteHistory(User user, String location, String code, ETopWear topWear, EOuterWear outer, EHeadWear headWear, ENeckWear neckWear, ESky sky, int temperature, LocalDateTime voteTime) {
+    public VoteHistory(User user, String location, String code, ETopWear topWear, EOuterWear outerWear, EHeadWear headWear, ENeckWear neckWear, ESky sky, int temperature, LocalDateTime voteTime) {
         this.user = user;
         this.location = location;
         this.code = code;
         this.topWear = topWear;
-        this.outer = outer;
+        this.outerWear = outerWear;
         this.headWear = headWear;
         this.neckWear = neckWear;
         this.sky = sky;
@@ -85,8 +84,8 @@ public class VoteHistory {
                 .location(region.getLocation())
                 .code(region.getCode())
                 .temperature(mainBranch.getTemperature())
+                .outerWear(outerWear)
                 .topWear(topWear)
-                .outer(outerWear)
                 .headWear(headWear)
                 .neckWear(neckWear)
                 .sky(mainBranch.getSky())

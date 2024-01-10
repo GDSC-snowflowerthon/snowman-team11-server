@@ -18,8 +18,7 @@ public enum ENeckWear implements Wear{
         this.value = value;
     }
 
-    @Override
-    public Wear fromValue(String value) {
+    public static ENeckWear fromValue(String value) {
         for (ENeckWear neckWear : ENeckWear.values()) {
             if (neckWear.getValue().equals(value)) {
                 return neckWear;

@@ -21,8 +21,7 @@ public enum EHeadWear implements Wear{
         this.value = value;
     }
 
-    @Override
-    public EHeadWear fromValue(String value) {
+    public static EHeadWear fromValue(String value) {
         for (EHeadWear headWear : EHeadWear.values()) {
             if (headWear.getValue().equals(value)) {
                 return headWear;

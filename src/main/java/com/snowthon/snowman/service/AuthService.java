@@ -22,13 +22,24 @@ public class AuthService {
 
     @Transactional
     public JwtTokenDto login(UserLoginDto userLoginDto) {
+        User user;
+        boolean isNewUser = false;
+
         Optional<User> existingUser = userRepository.findBySerialId(userLoginDto.providerId());
 
         if (existingUser.isPresent()) {
-            return jwtUtil.generateTokens(existingUser.get().getSerialId(), ERole.USER);
+            user = existingUser.get();
         } else {
-            User newUser = userRepository.save(User.signUp(userLoginDto.providerId()));
-            return jwtUtil.generateTokens(newUser.getSerialId(), ERole.USER);
+            user = userRepository.save(User.signUp(userLoginDto.providerId()));
+            isNewUser = true;
         }
+
+        JwtTokenDto jwtTokenDto = jwtUtil.generateTokens(user.getId(), ERole.USER);
+
+        if (isNewUser || !jwtTokenDto.refreshToken().equals(user.getRefreshToken())) {
+            userRepository.updateRefreshTokenAndLoginStatus(user.getId(), jwtTokenDto.refreshToken(), true);
+        }
+
+        return jwtTokenDto;
     }
 }
