@@ -85,15 +85,13 @@ public class ForecastData {
                 .mapToInt(data -> Integer.parseInt(data.getFcstValue()))
                 .sum();
 
-        // 한 쪽을 float로 캐스팅하여 소수점 이하의 값을 얻습니다.
-        log.info("data = {}",(float) totalTemperature / temperatureData.size());
         return (float) totalTemperature / temperatureData.size();
     }
 
 
     public static String getSkyCondition(List<ForecastData> forecastData) {
         return forecastData.stream()
-                .filter(data -> "SKY".equals(data.getCategory()))
+                .filter(data -> "PTY".equals(data.getCategory()))
                 .map(ForecastData::getFcstValue)
                 .findFirst()
                 .orElse("0");

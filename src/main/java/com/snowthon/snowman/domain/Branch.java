@@ -7,6 +7,10 @@ import com.snowthon.snowman.domain.wear.TopWear;
 import com.snowthon.snowman.dto.type.EBranchType;
 import com.snowthon.snowman.dto.type.ELevel;
 import com.snowthon.snowman.dto.type.ESky;
+import com.snowthon.snowman.dto.type.wear.EHeadWear;
+import com.snowthon.snowman.dto.type.wear.ENeckWear;
+import com.snowthon.snowman.dto.type.wear.EOuterWear;
+import com.snowthon.snowman.dto.type.wear.ETopWear;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -157,7 +161,6 @@ public class Branch {
 
         if (currentData != null) {
             Integer temperature = currentData.getCategory().equals("TMP") ? Integer.parseInt(currentData.getFcstValue()) : null;
-            log.info("temperature = {}", temperature);
 
             return Branch.builder()
                     .branchType(EBranchType.MAIN_BRANCH)
@@ -181,7 +184,8 @@ public class Branch {
         ForecastData currentData = findCurrentForecastData(forecastDataList, currentTime);
 
         if (currentData != null) {
-            this.sky = ESky.getSky(currentData.getCategory().equals("SKY") ? currentData.getFcstValue() : String.valueOf(ESky.CLEAR));
+            log.info("sky status = {}",currentData.getCategory().equals("PTY"));
+            this.sky = ESky.getSky(currentData.getCategory().equals("PTY") ? currentData.getFcstValue() : String.valueOf(ESky.CLEAR));
             this.temperature = currentData.getCategory().equals("TMP") ? Integer.parseInt(currentData.getFcstValue()) : this.temperature;
         }
     }
@@ -240,5 +244,12 @@ public class Branch {
 
     public void updateRegion(Region region){
         this.region = region;
+    }
+
+    public void updateVote(ETopWear topWear, EOuterWear outerWear, EHeadWear headWear, ENeckWear neckWear) {
+        this.topWear.updateVote(topWear);
+        this.outerWear.updateVote(outerWear);
+        this.headWear.updateVote(headWear);
+        this.neckWear.updateVote(neckWear);
     }
 }

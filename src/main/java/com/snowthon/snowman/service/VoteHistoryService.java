@@ -2,6 +2,8 @@ package com.snowthon.snowman.service;
 
 import com.snowthon.snowman.domain.*;
 import com.snowthon.snowman.dto.request.VoteRequestDto;
+import com.snowthon.snowman.dto.type.ErrorCode;
+import com.snowthon.snowman.exception.CommonException;
 import com.snowthon.snowman.repository.RegionRepository;
 import com.snowthon.snowman.repository.UserRegionVoteRepository;
 import com.snowthon.snowman.repository.UserRepository;
@@ -10,8 +12,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -22,20 +22,19 @@ public class VoteHistoryService {
     private final RegionRepository regionRepository;
     private final UserRepository userRepository;
 
+    //3-2. 투표 하기
     @Transactional
-    public void saveVote(Long regionId, VoteRequestDto requestDto, User user) {
+    public void createVote(Long regionId, VoteRequestDto voteRequestDto, Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
         Region region = regionRepository.findById(regionId)
-                .orElseThrow(() -> new RuntimeException("Region not found")); // Replace with appropriate exception
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_REGION));
 
         Branch mainBranch = region.getMainBranch();
+        mainBranch.updateVote(voteRequestDto.topWear(), voteRequestDto.outerWear(), voteRequestDto.headWear(), voteRequestDto.neckWear());
 
-        //VoteHistory 객체 성성 및 저장
-        VoteHistory voteHistory = VoteHistory.createFrom(user, region, mainBranch, requestDto);
-
-        mainBranch.getHeadWear().updateVote(requestDto.getHeadWear());
-        mainBranch.getNeckWear().updateVote(requestDto.getNeckWear());
-        mainBranch.getTopWear().updateVote(requestDto.getTopWear());
-        mainBranch.getOuterWear().updateVote(requestDto.getOuter());
+        VoteHistory voteHistory = VoteHistory.createFrom(user, region, mainBranch, voteRequestDto.topWear(), voteRequestDto.outerWear(), voteRequestDto.headWear(), voteRequestDto.neckWear());
 
         voteHistoryRepository.save(voteHistory);
 

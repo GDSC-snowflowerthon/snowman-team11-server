@@ -1,15 +1,12 @@
 package com.snowthon.snowman.domain;
 
 
-import com.nimbusds.openid.connect.sdk.assurance.evidences.VouchEvidence;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Getter

@@ -2,7 +2,6 @@ package com.snowthon.snowman.controller;
 
 import com.snowthon.snowman.annotation.UserId;
 import com.snowthon.snowman.contrant.Constants;
-import com.snowthon.snowman.domain.User;
 import com.snowthon.snowman.dto.common.ResponseDto;
 import com.snowthon.snowman.dto.request.VoteRequestDto;
 import com.snowthon.snowman.repository.UserRepository;
@@ -10,7 +9,6 @@ import com.snowthon.snowman.service.RegionService;
 import com.snowthon.snowman.service.VoteHistoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
@@ -45,16 +43,13 @@ public class RegionController {
         return ResponseDto.ok(hasVoted);
     }
 
-    //3-2 투표 하기
+    //3-2. 투표 하기
     @PostMapping("/{regionId}/poll")
     @Operation(summary = "투표 하기", description = "투표를 반영합니다")
     public ResponseDto<?> createVote(@UserId Long userId, @PathVariable Long regionId, @RequestBody VoteRequestDto requestDto) {
 
-        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found"));
-
-        voteHistoryService.saveVote(regionId, requestDto, user);
-
-        return ResponseDto.ok("투표가 완료되었습니다. ");
+        voteHistoryService.createVote(regionId, requestDto, userId);
+        return ResponseDto.ok(null);
     }
 
 }
