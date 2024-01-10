@@ -24,6 +24,7 @@ repositories {
 dependencies {
 	// Spring
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.google.code.findbugs:jsr305:3.0.2'
 
 	// Security
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
