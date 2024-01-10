@@ -9,9 +9,9 @@ import com.snowthon.snowman.dto.request.thirdParty.WeatherDto;
 import com.snowthon.snowman.dto.type.EBranchTime;
 import com.snowthon.snowman.dto.type.ErrorCode;
 import com.snowthon.snowman.exception.CommonException;
-import com.snowthon.snowman.repository.BranchRepository;
 import com.snowthon.snowman.repository.ForecastDataRepository;
 import com.snowthon.snowman.repository.RegionRepository;
+import com.snowthon.snowman.repository.UserRegionVoteRepository;
 import com.snowthon.snowman.utility.ForecastDateUtil;
 import com.snowthon.snowman.utility.ReverseGeoUtil;
 import com.snowthon.snowman.utility.WeatherUtil;
@@ -35,6 +35,7 @@ public class RegionService {
     private final ForecastDataRepository forecastDataRepository;
     private final ForecastDateUtil forecastDateUtil;
     private final RegionRepository regionRepository;
+    private final UserRegionVoteRepository userRegionVoteRepository;
 
 
     //2-1. 날씨 정보 조회
@@ -73,6 +74,7 @@ public class RegionService {
     @Scheduled(cron = "0 0 6,12,18,0 * * *")
     public void deleteAllRegions() {
         regionRepository.deleteAll();
+        userRegionVoteRepository.deleteAll();
     }
 
     /* 매 시간별 mainBranch 날씨, 시간값 업데이트 db삭제 */

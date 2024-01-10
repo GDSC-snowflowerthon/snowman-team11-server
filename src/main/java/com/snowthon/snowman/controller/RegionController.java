@@ -38,9 +38,7 @@ public class RegionController {
     @GetMapping("/{regionId}/poll")
     @Operation(summary = "투표 여부 조회", description = "투표 여부를 조회합니다")
     public ResponseDto<?> hasUserVoted(@UserId Long userId, @PathVariable Long regionId) {
-        boolean hasVoted = voteHistoryService.checkUserVoting(userId, regionId);
-
-        return ResponseDto.ok(hasVoted);
+        return ResponseDto.ok(voteHistoryService.checkUserVoting(userId, regionId));
     }
 
     //3-2. 투표 하기

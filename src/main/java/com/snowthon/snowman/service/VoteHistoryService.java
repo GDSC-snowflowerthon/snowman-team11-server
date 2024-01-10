@@ -10,7 +10,6 @@ import com.snowthon.snowman.repository.UserRepository;
 import com.snowthon.snowman.repository.VoteHistoryRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,22 +38,17 @@ public class VoteHistoryService {
         voteHistoryRepository.save(voteHistory);
 
         //UserRegionVote 객체 생성 및 저장
-        UserRegionVote userRegionVote = UserRegionVote.create(user, region);
-        userRegionVoteRepository.save(userRegionVote);
+        userRegionVoteRepository.save(UserRegionVote.create(user, region));
     }
 
-    //투표 여부 확인
+    //3-1. 투표 여부 확인
     public boolean checkUserVoting(Long userId, Long regionId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
         Region region = regionRepository.findById(regionId)
-                .orElseThrow(() -> new RuntimeException("Region not found"));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_REGION));
 
         return userRegionVoteRepository.existsByUserAndRegion(user, region);
-    }
-
-    @Scheduled(cron = "0 0 6,12,18,0 * * *")
-    public void clearUserRegionVoteTable() {
-        userRegionVoteRepository.deleteAll();
     }
 }
