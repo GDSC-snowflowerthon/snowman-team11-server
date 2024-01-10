@@ -17,15 +17,16 @@ import org.springframework.stereotype.Service;
 public class CustomUserDetailService implements UserDetailsService {
     private final UserRepository userRepository;
 
-    public UserDetails loadUserByEmailAndPhoneNumber(String email, String phoneNumber, String nickname) {
-        return userRepository.findByEmailAndPhoneNumber(email, phoneNumber)
+    public UserDetails loadUserBySerialId(Long serialId) {
+        return userRepository.findBySerialId(serialId)
                 .map(UserPrincipal::createByUserSecurityForm)
                 .orElseGet(() -> {
-                    User newUser = User.signUp(nickname, email, phoneNumber);
+                    User newUser = User.signUp(serialId);
                     userRepository.save(newUser);
                     return UserPrincipal.createByUserId(newUser.getId());
                 });
     }
+
 
     public UserDetails loadUserById(Long id) {
         UserRepository.UserSecurityForm user = userRepository.findSecurityFormById(id)

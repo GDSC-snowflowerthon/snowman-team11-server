@@ -19,16 +19,10 @@ public class User {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "nickname", nullable = false)
-    private String nickname;
+    @Column(name = "serial_id", nullable = false, unique = true)
+    private Long serialId;
 
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
-
-    @Column(name = "phone_number", nullable = false)
-    private String phoneNumber;
-
-    @Column(name = "refresh_token", nullable = false)
+    @Column(name = "refresh_token")
     private String refreshToken;
 
     @Column(name = "is_login", columnDefinition = "TINYINT(1)")
@@ -39,19 +33,15 @@ public class User {
 
 
     @Builder
-    public User(String nickname, String email, String phoneNumber) {
-        this.nickname = nickname;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
+    public User(Long serialId) {
+        this.serialId = serialId;
         this.isLogin = true;
         this.createdAt = LocalDateTime.now();
     }
 
-    public static User signUp(String nickname, String email, String phoneNumber) {
+    public static User signUp(Long serialId) {
         return User.builder()
-                .nickname(nickname)
-                .email(email)
-                .phoneNumber(phoneNumber)
+                .serialId(serialId)
                 .build();
     }
 }

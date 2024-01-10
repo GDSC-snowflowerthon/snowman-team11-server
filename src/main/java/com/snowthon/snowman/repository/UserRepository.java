@@ -15,11 +15,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByIdAndRefreshTokenAndIsLogin(Long id, String refreshToken, Boolean isLogin);
 
-    @Query("select u.id as id from User u where u.email = :email and u.phoneNumber = :phoneNumber")
-    Optional<UserSecurityForm> findByEmailAndPhoneNumber(@Param("email") String email, @Param("phoneNumber") String phoneNumber);
+    @Query("select u.id as id from User u")
+    Optional<UserSecurityForm> findBySerialId(Long serialId);
 
 //    @Query("select u.id as id, u.role as role from User u where u.serialId = :serialId")
 //    Optional<UserSecurityForm> findSecurityFormBySerialId(String serialId);
+
 
 
     @Query("select u.id as id from User u where u.id = :id and u.isLogin = true")

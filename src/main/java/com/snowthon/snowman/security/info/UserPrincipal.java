@@ -19,7 +19,6 @@ import java.util.Collections;
 public class UserPrincipal implements UserDetails {
     @Getter private final Long id;
     @Getter private final ERole role;
-    private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public static UserPrincipal createByUserSecurityForm(UserRepository.UserSecurityForm form) {
@@ -43,7 +42,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return null;
     }
 
     @Override

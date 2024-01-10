@@ -22,7 +22,7 @@ import java.io.IOException;
 public class CustomJsonUsernamePasswordAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
 
-    private static final String DEFAULT_LOGIN_PATH = "/api/auth/login";
+    private static final String DEFAULT_LOGIN_PATH = "/api/v1/auth/login";
     private final CustomUserDetailService customUserDetailService;
     private final ObjectMapper objectMapper;
     private final DefaultSuccessHandler defaultSuccessHandler;
@@ -44,7 +44,7 @@ public class CustomJsonUsernamePasswordAuthenticationFilter extends AbstractAuth
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException {
         UserLoginDto userLoginDto = objectMapper.readValue(request.getInputStream(), UserLoginDto.class);
-        UserPrincipal userPrincipal = (UserPrincipal) customUserDetailService.loadUserByEmailAndPhoneNumber();
+        UserPrincipal userPrincipal = (UserPrincipal) customUserDetailService.loadUserBySerialId(userLoginDto.providerId());
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 userPrincipal, null, userPrincipal.getAuthorities());
