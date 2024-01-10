@@ -56,16 +56,7 @@ public class VoteHistoryService {
         return userRegionVoteRepository.existsByUserAndRegion(user, region);
     }
 
-    //4-1. 모아 보기
-    public ArchivingDto getVoteHistoriesByUser(Long userId) {
-        List<VoteHistory> voteHistories = voteHistoryRepository.findByUserId(userId);
-        return ArchivingDto.fromEntity(voteHistories.stream()
-                .map(ArchivingDto.ArchivingDetailDto::fromEntity).collect(Collectors.toList()));
-    }
 
-    //4-2. 모아 보기(상세)
-    public ArchivingDto.ArchivingDetailDto getVoteHistoryById(Long voteHistoryId) {
-        return ArchivingDto.ArchivingDetailDto.fromEntity(voteHistoryRepository.findById(voteHistoryId)
-                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_HISTORY)));
-    }
+
+
 }

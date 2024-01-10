@@ -8,6 +8,7 @@ import com.snowthon.snowman.utility.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -22,6 +23,7 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class DefaultSuccessHandler implements AuthenticationSuccessHandler {
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
@@ -53,6 +55,7 @@ public class DefaultSuccessHandler implements AuthenticationSuccessHandler {
         );
         result.put("error", null);
 
+        log.info("====user accessToken = {}", tokenDto.accessToken());
         response.getWriter().write(JSONValue.toJSONString(result));
     }
 }
