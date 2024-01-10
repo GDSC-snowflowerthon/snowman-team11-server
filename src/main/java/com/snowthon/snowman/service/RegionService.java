@@ -7,7 +7,10 @@ import com.snowthon.snowman.dto.request.WeatherInfoDto;
 import com.snowthon.snowman.dto.request.thirdParty.RegionDto;
 import com.snowthon.snowman.dto.request.thirdParty.WeatherDto;
 import com.snowthon.snowman.dto.type.EBranchTime;
+import com.snowthon.snowman.dto.type.ErrorCode;
+import com.snowthon.snowman.exception.CommonException;
 import com.snowthon.snowman.repository.BranchRepository;
+import com.snowthon.snowman.repository.ForecastDataRepository;
 import com.snowthon.snowman.repository.RegionRepository;
 import com.snowthon.snowman.utility.ForecastDateUtil;
 import com.snowthon.snowman.utility.ReverseGeoUtil;
@@ -21,7 +24,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,48 +32,39 @@ public class RegionService {
 
     private final WeatherUtil weatherUtil;
     private final ReverseGeoUtil reverseGeoUtil;
+    private final ForecastDataRepository forecastDataRepository;
     private final ForecastDateUtil forecastDateUtil;
     private final RegionRepository regionRepository;
-    private final BranchRepository branchRepository;
 
 
     //2-1. 날씨 정보 조회
     @Transactional
     public WeatherInfoDto getWeather(double lat, double lng) {
-        RegionDto regionDto = reverseGeoUtil.getRegion(lat, lng);
-        Optional<RegionDto.Document> documentOptional = regionDto.getDocuments().stream()
-                .filter(document -> Constants.REGION_TYPE.equals(document.getRegionType()))
-                .findFirst();
+        RegionDto.Document document = reverseGeoUtil.getRegion(lat, lng).getDocuments().stream()
+                .filter(doc -> Constants.REGION_TYPE.equals(doc.getRegionType()))
+                .findFirst()
+                .orElseThrow(() -> new CommonException(ErrorCode.THIRD_PARTY_API_ERROR));
 
-        if (documentOptional.isPresent()) {
-            RegionDto.Document document = documentOptional.get();
-            String code = document.getCode();
-            Optional<Region> weatherOptional = regionRepository.findByCode(code);
+        Region region = regionRepository.findByCode(document.getCode())
+                .orElseGet(() -> {
+                    Map<String, String> baseDateAndTime = EBranchTime.getBaseTimeFromCurrentTime(LocalDateTime.now());
+                    List<Branch> branchList = forecastDateUtil.createBranchesFromForecastData(
+                            WeatherDto.createFromWeatherDto(
+                                    weatherUtil.getWeather(
+                                            lat,
+                                            lng,
+                                            baseDateAndTime.get("baseDate"),
+                                            baseDateAndTime.get("baseTime")
+                                    )
+                            )
+                    );
 
-            if (weatherOptional.isPresent()) {
-                return WeatherInfoDto.fromEntity(weatherOptional.get());
-            } else {
-                Map<String, String> baseDateAndTime = EBranchTime.getBaseTimeFromCurrentTime(LocalDateTime.now());
-                List<Branch> branchList = forecastDateUtil.createBranchesFromForecastData(
-                        WeatherDto.createFromWeatherDto(
-                                weatherUtil.getWeather(
-                                        lat,
-                                        lng,
-                                        baseDateAndTime.get("baseDate"),
-                                        baseDateAndTime.get("baseTime")
-                                )
-                        )
-                );
+                    Region newRegion = Region.createRegion(document.getAddressName(), document.getCode(), branchList);
+                    branchList.forEach(branch -> branch.updateRegion(newRegion));
+                    return regionRepository.save(newRegion);
+                });
 
-                log.info("branchList: {}", branchList);
-                Region region = Region.createRegion(document.getAddressName(), code, branchList);
-                branchList.forEach(branch -> branch.updateRegion(region));
-                regionRepository.save(region);
-                return WeatherInfoDto.fromEntity(region);
-
-            }
-        }
-        return null; // 조건에 해당하는 Weather 정보가 없는 경우
+        return WeatherInfoDto.fromEntity(region);
     }
 
 
@@ -82,5 +75,15 @@ public class RegionService {
         regionRepository.deleteAll();
     }
 
+    /* 매 시간별 mainBranch 날씨, 시간값 업데이트 db삭제 */
+    @Transactional
+    @Scheduled(cron = "0 0 1-5,7-11,13-17,19-23 * * *")
+    public void updateMainBranch() {
+        List<Region> regionList = regionRepository.findAll();
+        for (Region region : regionList) {
+            Branch mainBranch = region.getMainBranch();
+            mainBranch.updateMainBranch(forecastDataRepository.findByBranch(mainBranch));
+        }
+    }
 
 }
