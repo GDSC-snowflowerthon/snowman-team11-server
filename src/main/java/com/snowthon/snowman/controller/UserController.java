@@ -34,6 +34,7 @@ public class UserController {
     @Operation(summary = "아카이빙 상세보기", description = "상세한 투표정보를 가져옵니다.")
     public ResponseDto<?> archivingDetail(@PathVariable Long voteHistoryId) {
 
-        return ResponseDto.ok("아카이빙 상세보기 api입니다");
+        return ResponseDto.ok(voteHistoryService.getVoteHistoryById(voteHistoryId));
     }
+
 }
