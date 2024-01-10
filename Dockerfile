@@ -1,6 +1,6 @@
 FROM openjdk:17-alpine as builder
 
-COPY ./build/libs/app-0.0.1-SNAPSHOT.jar /app/app.jar
+COPY ./build/libs/snowman-0.0.1-SNAPSHOT.jar /app/app.jar
 WORKDIR /app
 
 RUN java -Djarmode=layertools -jar app.jar extract

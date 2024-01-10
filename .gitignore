@@ -38,3 +38,8 @@ out/
 
 
 /src/main/resources/application.yml
+
+/application/**
+/dependencies/**
+/spring-boot-loader/**
+/snapshot-dependencies/**
