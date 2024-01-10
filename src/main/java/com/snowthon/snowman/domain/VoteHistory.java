@@ -61,8 +61,6 @@ public class VoteHistory {
     @Column(name = "temperature", nullable = false)
     private int temperature;
 
-
-
     @Column(name ="vote_time", nullable = false)
     private LocalDateTime voteTime;
 

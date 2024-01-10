@@ -44,7 +44,7 @@ public class CustomJsonUsernamePasswordAuthenticationFilter extends AbstractAuth
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException {
         UserLoginDto userLoginDto = objectMapper.readValue(request.getInputStream(), UserLoginDto.class);
-        UserPrincipal userPrincipal = (UserPrincipal) customUserDetailService.loadUserByEmailAndPhoneNumber(userLoginDto.email(), userLoginDto.phoneNumber(), userLoginDto.nickname());
+        UserPrincipal userPrincipal = (UserPrincipal) customUserDetailService.loadUserByEmailAndPhoneNumber();
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 userPrincipal, null, userPrincipal.getAuthorities());
