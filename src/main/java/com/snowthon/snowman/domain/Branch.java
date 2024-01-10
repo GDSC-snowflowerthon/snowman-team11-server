@@ -55,7 +55,6 @@ public class Branch {
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ForecastData> forecastData;
 
-
     @Column(name ="sky")
     private ESky sky; //눈 비 구분
 
