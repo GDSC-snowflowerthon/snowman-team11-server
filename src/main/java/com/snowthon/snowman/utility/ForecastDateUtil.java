@@ -41,6 +41,7 @@ public class ForecastDateUtil {
         return branches;
     }
 
+
     private List<ForecastData> filterForecastDataByTimeRange(List<ForecastData> forecastData, String startTime, String endTime) {
         return forecastData.stream()
                 .filter(data -> isWithinTimeRange(data, startTime, endTime))
