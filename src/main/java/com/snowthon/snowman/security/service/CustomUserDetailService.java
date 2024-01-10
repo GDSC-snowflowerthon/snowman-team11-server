@@ -1,31 +1,20 @@
 package com.snowthon.snowman.security.service;
 
 
-import com.snowthon.snowman.domain.User;
 import com.snowthon.snowman.dto.type.ErrorCode;
 import com.snowthon.snowman.exception.CommonException;
 import com.snowthon.snowman.repository.UserRepository;
 import com.snowthon.snowman.security.info.UserPrincipal;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CustomUserDetailService implements UserDetailsService {
+@Slf4j
+public class CustomUserDetailService {
     private final UserRepository userRepository;
-
-    public UserDetails loadUserBySerialId(Long serialId) {
-        return userRepository.findBySerialId(serialId)
-                .map(UserPrincipal::createByUserSecurityForm)
-                .orElseGet(() -> {
-                    User newUser = User.signUp(serialId);
-                    userRepository.save(newUser);
-                    return UserPrincipal.createByUserId(newUser.getId());
-                });
-    }
 
 
     public UserDetails loadUserById(Long id) {
@@ -35,8 +24,5 @@ public class CustomUserDetailService implements UserDetailsService {
         return UserPrincipal.createByUserSecurityForm(user);
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
-    }
+
 }

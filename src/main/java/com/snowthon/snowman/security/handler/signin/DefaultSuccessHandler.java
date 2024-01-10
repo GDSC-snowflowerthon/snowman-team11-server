@@ -33,6 +33,7 @@ public class DefaultSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException {
+        log.info("====DefaultSuccessHandler====");
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         JwtTokenDto tokenDto = jwtUtil.generateTokens(userPrincipal.getId(), userPrincipal.getRole());
         userRepository.updateRefreshTokenAndLoginStatus(userPrincipal.getId(), tokenDto.refreshToken(), true);

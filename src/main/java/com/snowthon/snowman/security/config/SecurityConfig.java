@@ -1,8 +1,6 @@
 package com.snowthon.snowman.security.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.snowthon.snowman.contrant.Constants;
-import com.snowthon.snowman.security.filter.CustomJsonUsernamePasswordAuthenticationFilter;
 import com.snowthon.snowman.security.filter.GlobalLoggerFilter;
 import com.snowthon.snowman.security.filter.JwtAuthenticationFilter;
 import com.snowthon.snowman.security.filter.JwtExceptionFilter;
@@ -16,6 +14,7 @@ import com.snowthon.snowman.utility.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -29,11 +28,7 @@ import org.springframework.security.web.authentication.logout.LogoutFilter;
 public class SecurityConfig {
     private final CustomSignOutProcessHandler customSignOutProcessHandler;
     private final CustomSignOutResultHandler customSignOutResultHandler;
-    private final DefaultSuccessHandler defaultSuccessHandler;
-    private final DefaultFailureHandler defaultFailureHandler;
-
     private final JwtAuthEntryPoint jwtAuthEntryPoint;
-
     private final CustomUserDetailService customUserDetailService;
     private final JwtUtil jwtUtil;
 
@@ -66,10 +61,6 @@ public class SecurityConfig {
                 .addFilterBefore(
                         new JwtAuthenticationFilter(jwtUtil, customUserDetailService),
                         LogoutFilter.class)
-                .addFilterBefore(
-                        new CustomJsonUsernamePasswordAuthenticationFilter(
-                                new ObjectMapper(), customUserDetailService, defaultSuccessHandler, defaultFailureHandler),
-                        JwtAuthenticationFilter.class)
                 .addFilterBefore(
                         new JwtExceptionFilter(),
                         JwtAuthenticationFilter.class)
