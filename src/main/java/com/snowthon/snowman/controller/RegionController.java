@@ -35,12 +35,12 @@ public class RegionController {
 
 
     //3-1 투표 여부 조회
-    @GetMapping("/{weatherId}/poll")
+    @GetMapping("/{regionId}/poll")
     @Operation(summary = "투표 여부 조회", description = "투표 여부를 조회합니다")
-    public ResponseDto<?> isVoted(@UserId Long userId) {
+    public ResponseDto<?> hasUserVoted(@UserId Long userId, @PathVariable Long regionId) {
+        boolean hasVoted = voteHistoryService.checkUserVoting(userId, regionId);
 
-
-        return ResponseDto.ok(null);
+        return ResponseDto.ok(hasVoted);
     }
 
     //3-2. 투표 하기
@@ -51,6 +51,5 @@ public class RegionController {
         voteHistoryService.createVote(regionId, requestDto, userId);
         return ResponseDto.ok(null);
     }
-
 
 }

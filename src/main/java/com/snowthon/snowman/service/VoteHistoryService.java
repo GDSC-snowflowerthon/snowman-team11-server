@@ -1,17 +1,16 @@
 package com.snowthon.snowman.service;
 
-import com.snowthon.snowman.domain.Branch;
-import com.snowthon.snowman.domain.Region;
-import com.snowthon.snowman.domain.User;
-import com.snowthon.snowman.domain.VoteHistory;
+import com.snowthon.snowman.domain.*;
 import com.snowthon.snowman.dto.request.VoteRequestDto;
 import com.snowthon.snowman.dto.type.ErrorCode;
 import com.snowthon.snowman.exception.CommonException;
 import com.snowthon.snowman.repository.RegionRepository;
+import com.snowthon.snowman.repository.UserRegionVoteRepository;
 import com.snowthon.snowman.repository.UserRepository;
 import com.snowthon.snowman.repository.VoteHistoryRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class VoteHistoryService {
 
     private final VoteHistoryRepository voteHistoryRepository;
+    private final UserRegionVoteRepository userRegionVoteRepository;
     private final RegionRepository regionRepository;
     private final UserRepository userRepository;
 
@@ -37,5 +37,24 @@ public class VoteHistoryService {
         VoteHistory voteHistory = VoteHistory.createFrom(user, region, mainBranch, voteRequestDto.topWear(), voteRequestDto.outerWear(), voteRequestDto.headWear(), voteRequestDto.neckWear());
 
         voteHistoryRepository.save(voteHistory);
+
+        //UserRegionVote 객체 생성 및 저장
+        UserRegionVote userRegionVote = UserRegionVote.create(user, region);
+        userRegionVoteRepository.save(userRegionVote);
+    }
+
+    //투표 여부 확인
+    public boolean checkUserVoting(Long userId, Long regionId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Region region = regionRepository.findById(regionId)
+                .orElseThrow(() -> new RuntimeException("Region not found"));
+
+        return userRegionVoteRepository.existsByUserAndRegion(user, region);
+    }
+
+    @Scheduled(cron = "0 0 6,12,18,0 * * *")
+    public void clearUserRegionVoteTable() {
+        userRegionVoteRepository.deleteAll();
     }
 }
