@@ -59,9 +59,8 @@ jobs:
           password : ${{ secrets.PASSWORD }}
           port : 22
           script: |
-              mkdir test
-              sudo docker compose down
-              sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}:latest
+              docker compose down
+              docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}:latest
               docker compose up -d 
               docker image prune -f
               
