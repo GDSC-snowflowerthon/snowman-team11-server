@@ -10,11 +10,11 @@ import java.io.Serializable;
 @Builder
 @Schema(name = "JwtTokenDto", description = "JWT 토큰 응답")
 public record JwtTokenDto(
-        @JsonProperty("access_token")
-        @NotNull(message = "access_token은 필수값입니다.")
+        @JsonProperty("accessToken")
+        @NotNull(message = "accessToken은 필수값입니다.")
         String accessToken,
 
-        @JsonProperty("refresh_token")
+        @JsonProperty("refreshToken")
         String refreshToken
 
 ) implements Serializable {

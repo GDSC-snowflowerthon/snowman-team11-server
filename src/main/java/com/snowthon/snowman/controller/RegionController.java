@@ -9,6 +9,7 @@ import com.snowthon.snowman.service.RegionService;
 import com.snowthon.snowman.service.VoteHistoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping(Constants.API_PREFIX + "/weathers")
+@Tag(name = "Region", description = "지역 관련 API")
 public class RegionController {
 
     private final RegionService regionService;
