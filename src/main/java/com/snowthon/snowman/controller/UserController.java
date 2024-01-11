@@ -23,10 +23,16 @@ public class UserController {
 
     private final UserService userService;
 
+    /**
+     * TODO USERID
+     * @param userId
+     * @return
+     */
     //4-1. 모아 보기
     @GetMapping("/vote-history")
     @Operation(summary = "아카이빙 모아보기", description = "유저의 투표 기록들을 가져옵니다")
-    public ResponseDto<?> archiving(@UserId Long userId) {
+    public ResponseDto<?> archiving() {
+        Long userId = 1L;
         return ResponseDto.ok(userService.getVoteHistoriesByUser(userId));
     }
 
@@ -34,7 +40,6 @@ public class UserController {
     @GetMapping("/vote-history/{voteHistoryId}")
     @Operation(summary = "아카이빙 상세보기", description = "상세한 투표정보를 가져옵니다.")
     public ResponseDto<?> archivingDetail(@PathVariable Long voteHistoryId) {
-
         return ResponseDto.ok(userService.getVoteHistoryById(voteHistoryId));
     }
 

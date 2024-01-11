@@ -1,5 +1,5 @@
 package com.snowthon.snowman.controller;
-
+import io.swagger.v3.oas.annotations.Hidden;
 import com.snowthon.snowman.annotation.UserId;
 import com.snowthon.snowman.contrant.Constants;
 import com.snowthon.snowman.dto.common.ResponseDto;
@@ -7,7 +7,9 @@ import com.snowthon.snowman.dto.request.VoteRequestDto;
 import com.snowthon.snowman.repository.UserRepository;
 import com.snowthon.snowman.service.RegionService;
 import com.snowthon.snowman.service.VoteHistoryService;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -37,18 +39,32 @@ public class RegionController {
         return ResponseDto.ok(regionService.getWeather(latitude, longitude));
     }
 
+    /**
+     * TODO USERID
+     * @param regionId
+     * @param voteRequestDto
+     * @return
+     */
 
     //3-1 투표 여부 조회
     @GetMapping("/{regionId}/poll")
     @Operation(summary = "투표 여부 조회", description = "투표 여부를 조회합니다")
-    public ResponseDto<?> hasUserVoted(@UserId Long userId, @PathVariable Long regionId) {
+    public ResponseDto<?> hasUserVoted(@PathVariable Long regionId) {
+        Long userId = 1L;
         return ResponseDto.ok(voteHistoryService.checkUserVoting(userId, regionId));
     }
 
+    /**
+     * TODO USERID
+     * @param regionId
+     * @param voteRequestDto
+     * @return
+     */
     //3-2. 투표 하기
     @PostMapping("/{regionId}/poll")
     @Operation(summary = "투표 하기", description = "투표를 합니다.")
-    public ResponseDto<?> createVote(@UserId Long userId, @PathVariable Long regionId, @RequestBody VoteRequestDto voteRequestDto) {
+    public ResponseDto<?> createVote(@PathVariable Long regionId, @RequestBody VoteRequestDto voteRequestDto) {
+        Long userId = 1L;
         voteHistoryService.createVote(regionId, voteRequestDto, userId);
         return ResponseDto.ok(null);
     }
