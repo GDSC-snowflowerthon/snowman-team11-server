@@ -8,6 +8,7 @@ import com.snowthon.snowman.repository.VoteHistoryRepository;
 import com.snowthon.snowman.service.UserService;
 import com.snowthon.snowman.service.VoteHistoryService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping(Constants.API_PREFIX + "/users")
+@Tag(name = "User", description = "유저 관련 API")
 public class UserController {
 
     private final UserService userService;
