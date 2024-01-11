@@ -74,6 +74,7 @@ public class RegionService {
     @Scheduled(cron = "0 0 6,12,18,0 * * *")
     public void deleteAllRegions() {
         regionRepository.deleteAll();
+        forecastDataRepository.deleteAll();
         userRegionVoteRepository.deleteAll();
     }
 
