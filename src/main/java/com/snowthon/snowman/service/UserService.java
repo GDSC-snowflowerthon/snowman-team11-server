@@ -5,6 +5,8 @@ import com.snowthon.snowman.domain.VoteHistory;
 import com.snowthon.snowman.dto.response.ArchivingDto;
 import com.snowthon.snowman.dto.type.ErrorCode;
 import com.snowthon.snowman.exception.CommonException;
+import com.snowthon.snowman.repository.ForecastDataRepository;
+import com.snowthon.snowman.repository.UserRegionVoteRepository;
 import com.snowthon.snowman.repository.UserRepository;
 import com.snowthon.snowman.repository.VoteHistoryRepository;
 import com.snowthon.snowman.utility.JwtUtil;
@@ -21,6 +23,9 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final VoteHistoryRepository voteHistoryRepository;
+    private final UserRegionVoteRepository userRegionVoteRepository;
+    private final ForecastDataRepository forecastDataRepository;
+
     private final JwtUtil jwtUtil;
 
     @Transactional
@@ -43,4 +48,10 @@ public class UserService {
     }
 
 
+//    @Transactional
+//    public void deleteAllDatabase() {
+//        voteHistoryRepository.deleteAll();
+//        regionRepository.deleteAll();
+//        forecastDataRepository.deleteAll();
+//    }
 }
