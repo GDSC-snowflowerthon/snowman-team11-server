@@ -47,13 +47,13 @@ public class NeckWear {
         if (neckWear == ENeckWear.SCARF) {
             this.scarfCnt++;
         }
-        double totalVotes = scarfCnt;
-        double scarfScore = (totalVotes > 0) ? (scarfCnt / totalVotes) * 0.5 : 0;
-        if (this.eNeckWear == ENeckWear.SCARF) {
-            scarfScore += 0.5;
-        } else if (this.eNeckWear == ENeckWear.NONE) {
-            return;
-        }
-        this.eNeckWear = scarfScore > 0.5 ? ENeckWear.SCARF : ENeckWear.NONE;
+//        double totalVotes = scarfCnt;
+//        double scarfScore = (totalVotes > 0) ? (scarfCnt / totalVotes) * 0.5 : 0;
+//        if (this.eNeckWear == ENeckWear.SCARF) {
+//            scarfScore += 0.5;
+//        } else if (this.eNeckWear == ENeckWear.NONE) {
+//            return;
+//        }
+        this.eNeckWear = this.scarfCnt > 0 ? ENeckWear.SCARF : ENeckWear.NONE;
     }
 }
