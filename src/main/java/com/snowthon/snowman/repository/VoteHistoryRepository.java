@@ -8,7 +8,6 @@ import java.util.List;
 
 @Repository
 public interface VoteHistoryRepository extends JpaRepository<VoteHistory, Long> {
-    List<VoteHistory> findByUserId(Long userId);
 
     List<VoteHistory> findByRegionId(Long regionId);
 }
