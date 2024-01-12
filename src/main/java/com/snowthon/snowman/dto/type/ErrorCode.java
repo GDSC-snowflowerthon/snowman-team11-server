@@ -52,7 +52,8 @@ public enum ErrorCode {
     // Internal Server Error
     INTERNAL_SERVER_ERROR(50000, HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 에러입니다."),
     UPLOAD_FILE_ERROR(50001, HttpStatus.INTERNAL_SERVER_ERROR, "파일 업로드에 실패하였습니다."),
-    THIRD_PARTY_API_ERROR(50002, HttpStatus.INTERNAL_SERVER_ERROR, "외부 API 호출에 실패하였습니다.");
+    THIRD_PARTY_API_ERROR(50002, HttpStatus.INTERNAL_SERVER_ERROR, "외부 API 호출에 실패하였습니다."),
+    ALREADY_VOTED(50003,HttpStatus.INTERNAL_SERVER_ERROR, "이미 투표한 지역입니다.");
 
 
     private final Integer code;

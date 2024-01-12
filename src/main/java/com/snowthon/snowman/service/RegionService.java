@@ -73,9 +73,9 @@ public class RegionService {
     @Transactional
     @Scheduled(cron = "0 0 6,12,18,0 * * *")
     public void deleteAllRegions() {
+        userRegionVoteRepository.deleteAll();
         regionRepository.deleteAll();
         forecastDataRepository.deleteAll();
-        userRegionVoteRepository.deleteAll();
     }
 
     /* 매 시간별 mainBranch 날씨, 시간값 업데이트 db삭제 */

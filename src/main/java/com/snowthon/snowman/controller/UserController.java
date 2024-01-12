@@ -25,6 +25,7 @@ public class UserController {
 
     /**
      * TODO USERID
+     *
      * @param userId
      * @return
      */
@@ -50,4 +51,9 @@ public class UserController {
 //        return ResponseDto.ok(null);
 //    }
 
+//    @PostMapping("/delete-allUser")
+//    public ResponseDto<?> deleteAllDatabase() {
+//        userService.deleteAllDatabase();
+//        return ResponseDto.ok(null);
+//    }
 }
