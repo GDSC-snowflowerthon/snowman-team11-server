@@ -37,10 +37,10 @@ public class UserController {
     }
 
     //4-2. 모아 보기(상세)
-    @GetMapping("/vote-history/{voteHistoryId}")
+    @GetMapping("/vote-history/{archiveId}/details")
     @Operation(summary = "아카이빙 상세보기", description = "상세한 투표정보를 가져옵니다.")
-    public ResponseDto<?> archivingDetail(@PathVariable Long voteHistoryId) {
-        return ResponseDto.ok(userService.getVoteHistoryById(voteHistoryId));
+    public ResponseDto<?> archivingDetail(@PathVariable Long archiveId) {
+        return ResponseDto.ok(userService.getVoteHistoryById(archiveId));
     }
 
 //    @PostMapping("/make-testUser")
