@@ -13,6 +13,7 @@ import com.snowthon.snowman.exception.CommonException;
 import com.snowthon.snowman.repository.ForecastDataRepository;
 import com.snowthon.snowman.repository.RegionRepository;
 import com.snowthon.snowman.repository.UserRegionVoteRepository;
+import com.snowthon.snowman.repository.VoteHistoryRepository;
 import com.snowthon.snowman.utility.ForecastDateUtil;
 import com.snowthon.snowman.utility.ReverseGeoUtil;
 import com.snowthon.snowman.utility.WeatherUtil;
@@ -37,6 +38,7 @@ public class RegionService {
     private final ForecastDateUtil forecastDateUtil;
     private final RegionRepository regionRepository;
     private final UserRegionVoteRepository userRegionVoteRepository;
+    private final VoteHistoryRepository voteHistoryRepository;
 
 
     //2-1. 날씨 정보 조회
@@ -82,6 +84,7 @@ public class RegionService {
     @Scheduled(cron = "0 0 6,12,18,0 * * *")
     public void deleteAllRegions() {
         userRegionVoteRepository.deleteAll();
+        voteHistoryRepository.deleteAll();
         regionRepository.deleteAll();
         forecastDataRepository.deleteAll();
     }
