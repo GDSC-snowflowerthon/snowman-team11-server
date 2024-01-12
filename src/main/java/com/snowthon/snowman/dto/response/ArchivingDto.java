@@ -62,12 +62,12 @@ public class ArchivingDto{
                 @NotNull(message = "location는 필수입니다.")
                 private String location;
 
-                @JsonProperty("voteTime") @Schema(description = "투표 시간", example = "2021-10-10T10:10:10")
+                @JsonProperty("voteTime") @Schema(description = "투표 시간", example = "2024.01.12")
                 @NotNull(message = "voteTime는 필수입니다.")
-                private LocalDateTime voteTime;
+                private String voteTime;
 
                 @Builder
-                public ArchivingDetailDto(Long archiveId, ETopWear topWear, EOuterWear outerWear, EHeadWear headWear, ENeckWear neckWear, ESky weatherStatus, int temperature, String location, LocalDateTime voteTime) {
+                public ArchivingDetailDto(Long archiveId, ETopWear topWear, EOuterWear outerWear, EHeadWear headWear, ENeckWear neckWear, ESky weatherStatus, int temperature, String location, String voteTime) {
                         this.archiveId = archiveId;
                         this.topWear = topWear;
                         this.outerWear = outerWear;
@@ -89,7 +89,7 @@ public class ArchivingDto{
                                 .weatherStatus(voteHistory.getSky())
                                 .temperature(voteHistory.getTemperature())
                                 .location(voteHistory.getLocation())
-                                .voteTime(voteHistory.getVoteTime())
+                                .voteTime(voteHistory.getVoteTime().format(java.time.format.DateTimeFormatter.ofPattern("yyyy.MM.dd")))
                                 .build();
                 }
         }
