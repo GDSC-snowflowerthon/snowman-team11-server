@@ -35,10 +35,12 @@ public class VoteHistoryService {
 
         Region region = regionRepository.findById(regionId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_REGION));
-
+/*
         if(userRegionVoteRepository.existsByUserIdAndRegionId(userId, regionId)){
            throw new CommonException(ErrorCode.ALREADY_VOTED);
         }
+        
+ */
         Branch mainBranch = region.getMainBranch();
 
         mainBranch.updateVote(
