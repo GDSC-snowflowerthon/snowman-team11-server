@@ -55,17 +55,17 @@ public class HeadWear {
         } else if (headWear == EHeadWear.BALACLAVA) {
             this.balaclavaCnt++;
         }
-        double totalVotes = earmuffCnt + balaclavaCnt;
-        double earmuffScore = (totalVotes > 0) ? (earmuffCnt / totalVotes) * 0.5 : 0;
-        double balaclavaScore = (totalVotes > 0) ? (balaclavaCnt / totalVotes) * 0.5 : 0;
-        if (this.eheadWear == EHeadWear.EAR_MUFFS) {
-            earmuffScore += 0.5;
-        } else if (this.eheadWear == EHeadWear.BALACLAVA) {
-            balaclavaScore += 0.5;
-        } else if (this.eheadWear == EHeadWear.NONE) {
-            return;
-        }
-        this.eheadWear = earmuffScore > balaclavaScore ? EHeadWear.EAR_MUFFS : EHeadWear.BALACLAVA;
+//        double totalVotes = earmuffCnt + balaclavaCnt;
+//        double earmuffScore = (totalVotes > 0) ? (earmuffCnt / totalVotes) * 0.5 : 0;
+//        double balaclavaScore = (totalVotes > 0) ? (balaclavaCnt / totalVotes) * 0.5 : 0;
+//        if (this.eheadWear == EHeadWear.EAR_MUFFS) {
+//            earmuffScore += 0.5;
+//        } else if (this.eheadWear == EHeadWear.BALACLAVA) {
+//            balaclavaScore += 0.5;
+//        } else if (this.eheadWear == EHeadWear.NONE) {
+//            return;
+//        }
+        this.eheadWear = this.earmuffCnt >= this.balaclavaCnt ? EHeadWear.EAR_MUFFS : EHeadWear.BALACLAVA;
     }
 
 }

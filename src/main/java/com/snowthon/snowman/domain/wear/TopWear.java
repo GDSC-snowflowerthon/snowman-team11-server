@@ -55,7 +55,7 @@ public class TopWear {
         } else if (topWear == ETopWear.LONG_SLEEVE) {
             this.longSleeveCnt++;
         }
-        double totalVotes = neatCnt + longSleeveCnt;
+      /*  double totalVotes = neatCnt + longSleeveCnt;
         double neatScore = (totalVotes > 0) ? (neatCnt / totalVotes) * 0.5 : 0;
         double longSleeveScore = (totalVotes > 0) ? (longSleeveCnt / totalVotes) * 0.5 : 0;
 
@@ -63,7 +63,7 @@ public class TopWear {
             neatScore += 0.5;
         }else{
             longSleeveScore += 0.5;
-        }
-        this.eTopWear = longSleeveScore > neatScore ? ETopWear.LONG_SLEEVE : ETopWear.NEAT;
+        }*/
+        this.eTopWear = this.longSleeveCnt >= this.neatCnt ? ETopWear.LONG_SLEEVE : ETopWear.NEAT;
     }
 }

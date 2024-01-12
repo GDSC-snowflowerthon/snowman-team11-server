@@ -65,7 +65,7 @@ public class OuterWear {
         } else if (outerWear == EOuterWear.COAT) {
             this.coatCnt++;
         }
-        double totalVotes = longPaddingCnt + shortPaddingCnt + coatCnt;
+       /* double totalVotes = longPaddingCnt + shortPaddingCnt + coatCnt;
         double longPaddingScore = (totalVotes > 0) ? (longPaddingCnt / totalVotes) * 0.33 : 0;
         double shortPaddingScore = (totalVotes > 0) ? (shortPaddingCnt / totalVotes) * 0.33 : 0;
         double coatScore = (totalVotes > 0) ? (coatCnt / totalVotes) * 0.33 : 0;
@@ -77,7 +77,7 @@ public class OuterWear {
             coatScore += 0.33;
         } else if(this.eOuterWear == EOuterWear.NONE){
             return;
-        }
-        this.eOuterWear = (longPaddingScore > shortPaddingScore) ? (longPaddingScore > coatScore ? EOuterWear.LONG_PADDING : EOuterWear.COAT) : (shortPaddingScore > coatScore ? EOuterWear.SHORT_PADDING : EOuterWear.COAT);
+        }*/
+        this.eOuterWear = (this.longPaddingCnt >= this.shortPaddingCnt) ? (this.longPaddingCnt >= this.coatCnt ? EOuterWear.LONG_PADDING : EOuterWear.COAT) : (this.shortPaddingCnt >= this.coatCnt ? EOuterWear.SHORT_PADDING : EOuterWear.COAT);
     }
 }
