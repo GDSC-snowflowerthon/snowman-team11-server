@@ -19,8 +19,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Getter
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 public class VoteRateDto {
@@ -149,7 +147,6 @@ public class VoteRateDto {
 
     @Getter
     @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
-    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
     public static class TopWearDto {
 
         @JsonProperty("topWear") @Schema(description = "상의 정보", example = "LONG_SLEEVE")
@@ -171,7 +168,7 @@ public class VoteRateDto {
             this.longSleeveCnt = longSleeveCnt;
         }
 
-        public static TopWearDto formEntity(TopWear topWear) {
+        public static TopWearDto fromEntity(TopWear topWear) {
             return TopWearDto.builder()
                     .topWear(topWear.getETopWear())
                     .neatCnt(topWear.getNeatCnt())
@@ -196,7 +193,7 @@ public class VoteRateDto {
                 .headWear(HeadWearDto.fromEntity(mainBranch.getHeadWear()))
                 .neckWear(NeckWearDto.fromEntity(mainBranch.getNeckWear()))
                 .outerWear(OuterWearDto.fromEntity(mainBranch.getOuterWear()))
-                .topWear(TopWearDto.formEntity(mainBranch.getTopWear()))
+                .topWear(TopWearDto.fromEntity(mainBranch.getTopWear()))
                 .build();
     }
 }
