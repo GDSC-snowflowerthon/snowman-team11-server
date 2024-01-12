@@ -34,9 +34,9 @@ public class UserService {
     }
 
     //4-1. 모아 보기
-    public ArchivingDto getVoteHistoriesByUser(Long userId) {
-        List<VoteHistory> voteHistories = voteHistoryRepository.findByUserId(userId);
-        return ArchivingDto.fromEntity(voteHistories.stream()
+    public ArchivingDto getVoteHistoriesByUser(Long regionId) {
+        List<VoteHistory> voteHistoryList = voteHistoryRepository.findByRegionId(regionId);
+        return ArchivingDto.fromEntity(voteHistoryList.stream()
                 .map(ArchivingDto.ArchivingDetailDto::fromEntity).collect(Collectors.toList()));
     }
 

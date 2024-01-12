@@ -27,9 +27,12 @@ public class VoteHistory {
     @Column(name = "id")
     private Long id;
 
+    @Column(name="nickname", nullable = false)
+    private String nickname;
+
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="user_id", nullable = false)
-    private User user;
+    @JoinColumn(name="region_id", nullable = false)
+    private Region region;
 
     @Column(name = "location", nullable = false)
     private String location;
@@ -64,8 +67,9 @@ public class VoteHistory {
     private LocalDateTime voteTime;
 
     @Builder
-    public VoteHistory(User user, String location, String code, ETopWear topWear, EOuterWear outerWear, EHeadWear headWear, ENeckWear neckWear, ESky sky, int temperature, LocalDateTime voteTime) {
-        this.user = user;
+    public VoteHistory(Region region,String nickname, String location, String code, ETopWear topWear, EOuterWear outerWear, EHeadWear headWear, ENeckWear neckWear, ESky sky, int temperature, LocalDateTime voteTime) {
+        this.region = region;
+        this.nickname = nickname;
         this.location = location;
         this.code = code;
         this.topWear = topWear;
@@ -78,9 +82,10 @@ public class VoteHistory {
     }
 
     //투표를 저장할 때 사용
-    public static VoteHistory createFrom(User user, Region region, Branch mainBranch, ETopWear topWear, EOuterWear outerWear, EHeadWear headWear, ENeckWear neckWear) {
+    public static VoteHistory createFrom(Region region, String nickname, Branch mainBranch, ETopWear topWear, EOuterWear outerWear, EHeadWear headWear, ENeckWear neckWear) {
         return VoteHistory.builder()
-                .user(user)
+                .region(region)
+                .nickname(nickname)
                 .location(region.getLocation())
                 .code(region.getCode())
                 .temperature(mainBranch.getTemperature())

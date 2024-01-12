@@ -51,7 +51,7 @@ public class VoteHistoryService {
         );
 
         VoteHistory voteHistory = VoteHistory.createFrom(
-                user, region, mainBranch,
+                region, user.getNickname(),mainBranch,
                 ETopWear.valueOf(voteInfoDto.topWear()),
                 EOuterWear.valueOf(voteInfoDto.outerWear()),
                 EHeadWear.valueOf(voteInfoDto.headWear()),
