@@ -66,4 +66,11 @@ public class RegionController {
         return ResponseDto.ok(null);
     }
 
+    @GetMapping("/{weatherId}/vote-rate")
+    @Operation(summary = "투표 실시간 현황 조회", description = "각 의상 부위별 투표수를 보여줍니다. ")
+    public ResponseDto<?> getVoteRate(@PathVariable("weatherId") Long regionId) {
+
+        return ResponseDto.ok(regionService.getVoteRateInfo(regionId));
+    }
+
 }
