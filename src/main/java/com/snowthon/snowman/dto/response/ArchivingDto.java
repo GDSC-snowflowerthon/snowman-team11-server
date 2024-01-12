@@ -28,7 +28,7 @@ public class ArchivingDto{
         @Getter
         @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
         public static class ArchivingDetailDto {
-                @JsonProperty("archive_id") @Schema(description = "아카이브 아이디", example = "1")
+                @JsonProperty("archiveId") @Schema(description = "아카이브 아이디", example = "1")
                 @NotNull(message = "이름은 필수입니다.")
                 private Long archiveId;
 
