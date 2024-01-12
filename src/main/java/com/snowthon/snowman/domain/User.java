@@ -1,6 +1,7 @@
 package com.snowthon.snowman.domain;
 
 
+import com.snowthon.snowman.contrant.Constants;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,6 +23,9 @@ public class User {
     @Column(name = "serial_id", nullable = false, unique = true)
     private Long serialId;
 
+    @Column(name = "nickname", nullable = false)
+    private String nickname;
+
     @Column(name = "refresh_token")
     private String refreshToken;
 
@@ -37,6 +41,7 @@ public class User {
         this.serialId = serialId;
         this.isLogin = true;
         this.createdAt = LocalDateTime.now();
+        this.nickname = Constants.USER_NICKNAME_PREFIX + serialId;
     }
 
     public static User signUp(Long serialId) {

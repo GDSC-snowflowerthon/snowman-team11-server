@@ -20,7 +20,6 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ArchivingDto{
 
         @JsonProperty("voteHistoryList") @Schema(description = "투표 내역 리스트")
@@ -28,11 +27,14 @@ public class ArchivingDto{
 
         @Getter
         @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
-        @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
         public static class ArchivingDetailDto {
                 @JsonProperty("archive_id") @Schema(description = "아카이브 아이디", example = "1")
                 @NotNull(message = "이름은 필수입니다.")
                 private Long archiveId;
+
+                @JsonProperty("nickname") @Schema(description = "닉네임", example = "pengdolli_2310121")
+                @NotNull(message = "닉네임은 필수입니다.")
+                private String nickname;
 
                 @JsonProperty("topWear") @Schema(description = "상의 정보", example = "LONG_SLEEVE")
                 @NotNull(message = "topWear는 필수입니다.")
@@ -67,8 +69,9 @@ public class ArchivingDto{
                 private String voteTime;
 
                 @Builder
-                public ArchivingDetailDto(Long archiveId, ETopWear topWear, EOuterWear outerWear, EHeadWear headWear, ENeckWear neckWear, ESky weatherStatus, int temperature, String location, String voteTime) {
+                public ArchivingDetailDto(Long archiveId, String nickname ,ETopWear topWear, EOuterWear outerWear, EHeadWear headWear, ENeckWear neckWear, ESky weatherStatus, int temperature, String location, String voteTime) {
                         this.archiveId = archiveId;
+                        this.nickname = nickname;
                         this.topWear = topWear;
                         this.outerWear = outerWear;
                         this.headWear = headWear;
@@ -82,6 +85,7 @@ public class ArchivingDto{
                 public static ArchivingDetailDto fromEntity(VoteHistory voteHistory) {
                         return ArchivingDetailDto.builder()
                                 .archiveId(voteHistory.getId())
+                                .nickname(voteHistory.getNickname())
                                 .topWear(voteHistory.getTopWear())
                                 .outerWear(voteHistory.getOuterWear())
                                 .headWear(voteHistory.getHeadWear())

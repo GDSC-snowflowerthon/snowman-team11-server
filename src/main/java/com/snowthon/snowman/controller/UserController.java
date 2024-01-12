@@ -30,11 +30,10 @@ public class UserController {
      * @return
      */
     //4-1. 모아 보기
-    @GetMapping("/vote-history")
-    @Operation(summary = "아카이빙 모아보기", description = "유저의 투표 기록들을 가져옵니다")
-    public ResponseDto<?> archiving() {
-        Long userId = 1L;
-        return ResponseDto.ok(userService.getVoteHistoriesByUser(userId));
+    @GetMapping("/vote-history/{weatherId}")
+    @Operation(summary = "아카이빙 모아보기", description = "그 지역 모든 유저들의 투표 기록들을 가져옵니다")
+    public ResponseDto<?> archiving(@PathVariable("weatherId") Long regionId) {
+        return ResponseDto.ok(userService.getVoteHistoriesByUser(regionId));
     }
 
     //4-2. 모아 보기(상세)
